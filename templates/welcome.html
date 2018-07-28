@@ -17,13 +17,19 @@
 <html>
   <head>
     <title>Welcome</title>
-    <link rel="stylesheet" type="text/css" href="app-stylesheets/boring-style.css">
+    <!-- <link rel="stylesheet" type="text/css" href="app-stylesheets/boring-style.css"> -->
   </head>
   <body>
-    <form method=POST action="/">
+    <p>
+      {% for item in list_artists %}
+      <p>{{ item }}</p>
+      {% endfor %}
+      {{ api_json }}
+    </p>
+    <!-- <form method=POST action="/">
       Your Favorite Food:<br>
       <input type="text" name="user-fav-food" value="Nachos">
       <input type="submit" value="I'm Hungry">
-    </form>
+    </form> -->
   </body>
 </html>
