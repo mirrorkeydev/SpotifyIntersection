@@ -29,7 +29,7 @@ class MainPage(webapp2.RequestHandler):
     def get(self):
         #CALLING THE SPOTIFY API FOR THE FIRST PLAYLIST-1-1-1-1-1-1-1-1-1-1-1-1-1-1
         api = requests.get("https://api.spotify.com/v1/users/mirrorkey/playlists/3QnM2I2B8vZYEqhignp37n/", #tracks?offset=100
-        headers={"Authorization": "Bearer BQBdmpFHd9rSMXqnX3bQPcUOo98p_Y_kqsJn_RgQtV8uA6ez7xvlL-eQNNZ6fcEKMY5zObbNPj_QsGm8Dc8_sUs9O5DUk7yLZM-9xITMnWjUkzG0ya6uFeC2oBIrx1skt6-eXvdCqNB9J2Srm3VmtJ6J8z2zZC8",
+        headers={"Authorization": "Bearer BQDSRe2lil0J9ksm2KcQVH7yodtRyytrvL4vFImNvkPeNjZgbNLH8Mx3d2z794gF-vkyb27hKWYAEFPkYIYhrBzoTcbKYVKE1dVkogCEy8W9Xm_Q1cLFDJzZYb3as9wWWlnPIA13hsOwstsZr5HKzCyN7jptQeg",
         "Accept": "application/json","Content-Type": "application/json"})
         api_json = api.json() #changes Response object 'api' into an itemizable JSON
         api_text = api.text #changes Response object 'api' into text so it may be passed to jinja
@@ -77,13 +77,13 @@ class MainPage(webapp2.RequestHandler):
             if flag == 0:
                 print("doing songs 100-200")
                 next_api = requests.get(api_json["tracks"]["next"], #calls 0-100 song json
-                headers={"Authorization": "Bearer BQBdmpFHd9rSMXqnX3bQPcUOo98p_Y_kqsJn_RgQtV8uA6ez7xvlL-eQNNZ6fcEKMY5zObbNPj_QsGm8Dc8_sUs9O5DUk7yLZM-9xITMnWjUkzG0ya6uFeC2oBIrx1skt6-eXvdCqNB9J2Srm3VmtJ6J8z2zZC8",
+                headers={"Authorization": "Bearer BQDSRe2lil0J9ksm2KcQVH7yodtRyytrvL4vFImNvkPeNjZgbNLH8Mx3d2z794gF-vkyb27hKWYAEFPkYIYhrBzoTcbKYVKE1dVkogCEy8W9Xm_Q1cLFDJzZYb3as9wWWlnPIA13hsOwstsZr5HKzCyN7jptQeg",
                 "Accept": "application/json","Content-Type": "application/json"})
                 flag = 1 #ensures this will only run for song breakdown 100-200
             elif total_tracks_left > 100: #ANALYSIS SONGS 200+
                 print("doing songs 200+")
                 next_api = requests.get(next_api_json["next"], #if total_tracks_left < 100, there will be no "next"
-                headers={"Authorization": "Bearer BQBdmpFHd9rSMXqnX3bQPcUOo98p_Y_kqsJn_RgQtV8uA6ez7xvlL-eQNNZ6fcEKMY5zObbNPj_QsGm8Dc8_sUs9O5DUk7yLZM-9xITMnWjUkzG0ya6uFeC2oBIrx1skt6-eXvdCqNB9J2Srm3VmtJ6J8z2zZC8",
+                headers={"Authorization": "Bearer BQDSRe2lil0J9ksm2KcQVH7yodtRyytrvL4vFImNvkPeNjZgbNLH8Mx3d2z794gF-vkyb27hKWYAEFPkYIYhrBzoTcbKYVKE1dVkogCEy8W9Xm_Q1cLFDJzZYb3as9wWWlnPIA13hsOwstsZr5HKzCyN7jptQeg",
                 "Accept": "application/json","Content-Type": "application/json"})
 
             next_api_json = next_api.json()
@@ -125,7 +125,7 @@ class MainPage(webapp2.RequestHandler):
 
         #CALLING THE SPOTIFY API FOR THE SECOND PLAYLIST-2-2-2-2-2-2-2-2-2-2-2-2-2-2-2-2-2-2-2
         api_2 = requests.get("https://api.spotify.com/v1/users/tomvestuto/playlists/7dMD9LPqoXwMXdG8syTm8q/", #tracks?offset=100
-        headers={"Authorization": "Bearer BQBdmpFHd9rSMXqnX3bQPcUOo98p_Y_kqsJn_RgQtV8uA6ez7xvlL-eQNNZ6fcEKMY5zObbNPj_QsGm8Dc8_sUs9O5DUk7yLZM-9xITMnWjUkzG0ya6uFeC2oBIrx1skt6-eXvdCqNB9J2Srm3VmtJ6J8z2zZC8",
+        headers={"Authorization": "Bearer BQDSRe2lil0J9ksm2KcQVH7yodtRyytrvL4vFImNvkPeNjZgbNLH8Mx3d2z794gF-vkyb27hKWYAEFPkYIYhrBzoTcbKYVKE1dVkogCEy8W9Xm_Q1cLFDJzZYb3as9wWWlnPIA13hsOwstsZr5HKzCyN7jptQeg",
         "Accept": "application/json","Content-Type": "application/json"})
         api_json_2 = api_2.json() #changes Response object 'api' into an itemizable JSON
         api_text_2 = api_2.text #changes Response object 'api' into text so it may be passed to jinja
@@ -173,13 +173,13 @@ class MainPage(webapp2.RequestHandler):
             if flag_2 == 0:
                 print("doing songs 100-200")
                 next_api_2 = requests.get(api_json_2["tracks"]["next"], #calls 0-100 song json
-                headers={"Authorization": "Bearer BQBdmpFHd9rSMXqnX3bQPcUOo98p_Y_kqsJn_RgQtV8uA6ez7xvlL-eQNNZ6fcEKMY5zObbNPj_QsGm8Dc8_sUs9O5DUk7yLZM-9xITMnWjUkzG0ya6uFeC2oBIrx1skt6-eXvdCqNB9J2Srm3VmtJ6J8z2zZC8",
+                headers={"Authorization": "Bearer BQDSRe2lil0J9ksm2KcQVH7yodtRyytrvL4vFImNvkPeNjZgbNLH8Mx3d2z794gF-vkyb27hKWYAEFPkYIYhrBzoTcbKYVKE1dVkogCEy8W9Xm_Q1cLFDJzZYb3as9wWWlnPIA13hsOwstsZr5HKzCyN7jptQeg",
                 "Accept": "application/json","Content-Type": "application/json"})
                 flag_2 = 1 #ensures this will only run for song breakdown 100-200
             elif total_tracks_left_2 > 100: #ANALYSIS SONGS 200+
                 print("doing songs 200+")
                 next_api_2 = requests.get(next_api_json_2["next"], #if total_tracks_left < 100, there will be no "next"
-                headers={"Authorization": "Bearer BQBdmpFHd9rSMXqnX3bQPcUOo98p_Y_kqsJn_RgQtV8uA6ez7xvlL-eQNNZ6fcEKMY5zObbNPj_QsGm8Dc8_sUs9O5DUk7yLZM-9xITMnWjUkzG0ya6uFeC2oBIrx1skt6-eXvdCqNB9J2Srm3VmtJ6J8z2zZC8",
+                headers={"Authorization": "Bearer BQDSRe2lil0J9ksm2KcQVH7yodtRyytrvL4vFImNvkPeNjZgbNLH8Mx3d2z794gF-vkyb27hKWYAEFPkYIYhrBzoTcbKYVKE1dVkogCEy8W9Xm_Q1cLFDJzZYb3as9wWWlnPIA13hsOwstsZr5HKzCyN7jptQeg",
                 "Accept": "application/json","Content-Type": "application/json"})
 
             next_api_json_2 = next_api_2.json()
