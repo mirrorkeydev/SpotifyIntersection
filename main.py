@@ -25,7 +25,7 @@ jinja_current_dir = jinja2.Environment( #jinja is used for templating
     #TODO: Spotify Client Credentials Flow
     #TOKNOW: There are now 3 places where you need to update the authenticator
 
-class MainPage(webapp2.RequestHandler):
+class ResultsPage(webapp2.RequestHandler):
     def get(self):
         #CALLING THE SPOTIFY API FOR THE FIRST PLAYLIST-1-1-1-1-1-1-1-1-1-1-1-1-1-1
         api = requests.get("https://api.spotify.com/v1/users/mirrorkey/playlists/3QnM2I2B8vZYEqhignp37n/", #tracks?offset=100
@@ -252,14 +252,35 @@ class MainPage(webapp2.RequestHandler):
     #     end_template = jinja_current_dir.get_template("templates/results.html")
     #     self.response.write(end_template.render(variable_dict))
 
-class ResultsPage(webapp2.RequestHandler):
+class MainPage(webapp2.RequestHandler):
     def get(self):
-        food_list_template = jinja_current_dir.get_template("templates/foodlist.html")
-        fav_foods = Food.query().order(-Food.food_name).fetch(3)
-        dict_for_template = {'top_fav_foods': fav_foods}
-        self.response.write(food_list_template.render(dict_for_template))
+        start_template = jinja_current_dir.get_template("templates/homepage.html")
+        self.response.write(start_template.render())
+
+class FinalPage(webapp2.RequestHandler):
+    def get(self):
+        start_template = jinja_current_dir.get_template("templates/results.html")
+        self.response.write(start_template.render())
+    def post(self):
+        firsturl = self.request.get('fname')
+        secondurl = self.request.get('lname')
+
+        url_dict={
+        "url_1": firsturl,
+        "url_2": secondurl,
+        }
+
+        start_template = jinja_current_dir.get_template("templates/results.html")
+        self.response.write(start_template.render(url_dict))
+
+class AboutUsPage(webapp2.RequestHandler):
+    def get(self):
+        start_template = jinja_current_dir.get_template("templates/aboutus.html")
+        self.response.write(start_template.render())
 
 app = webapp2.WSGIApplication([
     ('/', MainPage),
-    ('/results', ResultsPage)
+    ('/about-us', AboutUsPage),
+    ('/final', FinalPage),
+    ('/results', ResultsPage),
 ], debug=True)
