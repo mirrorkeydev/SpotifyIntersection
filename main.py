@@ -7,8 +7,12 @@ import json
 #from models import Food #not needed
 import unicodedata
 from requests_toolbelt.adapters import appengine
+import sys                          #|these 3 lines fix most UnicodeDecodeErrors
+reload(sys)                         #|and UnicodeEncodeErrors due to names like
+sys.setdefaultencoding("utf-8")     #|Beyonce with the accent (#BeyonceError)
 
 appengine.monkeypatch() #this is a patch that allows the python requests library to be used with Google App Engine
+
 
 jinja_current_dir = jinja2.Environment( #jinja is used for templating
     loader=jinja2.FileSystemLoader(os.path.dirname(__file__)),
@@ -19,13 +23,13 @@ jinja_current_dir = jinja2.Environment( #jinja is used for templating
     #TODO: order your artists by how many songs you have from them
     #TODO: get started on song count
     #TODO: Spotify Client Credentials Flow
-    #TOKNOW: There are now 2 places where you need to update the authenticator
+    #TOKNOW: There are now 3 places where you need to update the authenticator
 
 class MainPage(webapp2.RequestHandler):
     def get(self):
         #CALLING THE SPOTIFY API FOR ONE PLAYLIST----------------------------------
-        api = requests.get("https://api.spotify.com/v1/users/Christopher%20Kang/playlists/5cwOYhLtcppuXKRYrudBmq/", #tracks?offset=100
-        headers={"Authorization": "Bearer BQBAOwM0UbhUL7mzG0JIkeMw2RYdEmZTFefdoYKseGn7jL3vCF-JyIiWhuEhoaCGx-myGloRhfFh8V9QyMJpxH9B1PyaYig97_-8xkisrusgEpYPvTOgOQUKFtZ9hfRsDVgHxkYGnvA_yo0YgJ29TEI8e4zssic",
+        api = requests.get("https://api.spotify.com/v1/users/mirrorkey/playlists/3QnM2I2B8vZYEqhignp37n/", #tracks?offset=100
+        headers={"Authorization": "Bearer BQD9munmcGzOCQPgvblQ9DhDJcqgCEQQlMFuJO3tBWdzUDnTRzOl8Hh_QyfUx3V4DHG6gW3v6GJlgqgxctnkHwNXdJA8R7rYXHM-5ytcFWItBzA962R-0WSGz5TvqQS6YmxVWk2EYtj89H_U5IhUrNhcgtLNTQU",
         "Accept": "application/json","Content-Type": "application/json"})
         api_json = api.json() #changes Response object 'api' into an itemizable JSON
         api_text = api.text #changes 'api' into text so it may be viewed
@@ -46,12 +50,28 @@ class MainPage(webapp2.RequestHandler):
             except (UnicodeEncodeError, IndexError):
                 print("an error has occurred")
 
-        total_tracks = api_json["tracks"]["total"] #this is necessary as the next_api_json is formatted differently
+        print(songs_analyzed_count)
 
-        while total_tracks > 100: #spotify api only returns first 100 songs, so we need to request more
-            next_api = requests.get(api_json["tracks"]["next"],
-            headers={"Authorization": "Bearer BQBAOwM0UbhUL7mzG0JIkeMw2RYdEmZTFefdoYKseGn7jL3vCF-JyIiWhuEhoaCGx-myGloRhfFh8V9QyMJpxH9B1PyaYig97_-8xkisrusgEpYPvTOgOQUKFtZ9hfRsDVgHxkYGnvA_yo0YgJ29TEI8e4zssic",
-            "Accept": "application/json","Content-Type": "application/json"})
+        total_tracks_left = api_json["tracks"]["total"] #this is necessary as the next_api_json is formatted differently
+        flag = 0 #3 playlist breakdowns: 0-100 songs above, 100-200 songs below, 200+ songs further below
+
+        next_api = ""
+        next_api_json = ""
+        next_api_text = ""
+
+        while total_tracks_left > 5: #spotify api only returns first 100 songs, so we need to request more
+            if flag == 0:
+                print("doing songs 100-200")
+                next_api = requests.get(api_json["tracks"]["next"], #calls 0-100 song json
+                headers={"Authorization": "Bearer BQD9munmcGzOCQPgvblQ9DhDJcqgCEQQlMFuJO3tBWdzUDnTRzOl8Hh_QyfUx3V4DHG6gW3v6GJlgqgxctnkHwNXdJA8R7rYXHM-5ytcFWItBzA962R-0WSGz5TvqQS6YmxVWk2EYtj89H_U5IhUrNhcgtLNTQU",
+                "Accept": "application/json","Content-Type": "application/json"})
+                flag = 1 #ensures this will only run for song breakdown 100-200
+            elif total_tracks_left > 100: #song breakdown 200+
+                print("doing songs 200+")
+                next_api = requests.get(next_api_json["next"], #if total_tracks_left < 100, there will be no "next"
+                headers={"Authorization": "Bearer BQD9munmcGzOCQPgvblQ9DhDJcqgCEQQlMFuJO3tBWdzUDnTRzOl8Hh_QyfUx3V4DHG6gW3v6GJlgqgxctnkHwNXdJA8R7rYXHM-5ytcFWItBzA962R-0WSGz5TvqQS6YmxVWk2EYtj89H_U5IhUrNhcgtLNTQU",
+                "Accept": "application/json","Content-Type": "application/json"})
+
             next_api_json = next_api.json()
             next_api_text = next_api.text
 
@@ -63,11 +83,12 @@ class MainPage(webapp2.RequestHandler):
                         list_artists.append(x["track"]["artists"][0]["name"])
                         print("success!")
                     else:
-                        print("artist already in list!")
-                except (UnicodeEncodeError, IndexError):
+                        print("artist " + x["track"]["artists"][0]["name"] + " already in list!")
+                except (UnicodeEncodeError, IndexError, UnicodeDecodeError):
                     print("an error has occurred")
 
-            total_tracks -= 100
+            total_tracks_left -= 100
+            print("Finished the next 100 songs, " + str(total_tracks_left) + " songs left")
 
         for item in list_artists: #this is a test printer that prints the artists to console
             try:
