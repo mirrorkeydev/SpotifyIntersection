@@ -1,26 +1,10 @@
-#!/usr/bin/python
-#
-# Copyright 2018 Google LLC
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#      http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
-
 import webapp2
 import os
 import jinja2
 import requests
 from google.appengine.api import urlfetch
 import json
-from models import Food #not needed
+#from models import Food #not needed
 import unicodedata
 from requests_toolbelt.adapters import appengine
 
@@ -31,39 +15,72 @@ jinja_current_dir = jinja2.Environment( #jinja is used for templating
     extensions=['jinja2.ext.autoescape'],
     autoescape=True)
 
+    #TODO: count how many times an artist is in your playlist (key-value pairs)
+    #TODO: order your artists by how many songs you have from them
+    #TODO: get started on song count
+    #TODO: Spotify Client Credentials Flow
+    #TOKNOW: There are now 2 places where you need to update the authenticator
+
 class MainPage(webapp2.RequestHandler):
     def get(self):
-        #api_key = "CHDZ8UreSrk50StUryZevwgH5D6U16Ec"
-        api = requests.get("https://api.spotify.com/v1/users/mirrorkey/playlists/3QnM2I2B8vZYEqhignp37n/", #tracks?offset=100
-        headers={"Authorization": "Bearer BQDhFXPijHJXC23KQf7b4whwzOU5dOTiahaj9zgHovgYVH7kH0GbLe6X_RxR9CSGqfmI0cRs60vGXo63F0GUqT_RFKJyKgXzM2LCQeCDpfn_Z4GKq0ouzrtCheoGNPgwc2LnFuBdZV01LssB8-dhq4wd1904xDM",
+        #CALLING THE SPOTIFY API FOR ONE PLAYLIST----------------------------------
+        api = requests.get("https://api.spotify.com/v1/users/Christopher%20Kang/playlists/5cwOYhLtcppuXKRYrudBmq/", #tracks?offset=100
+        headers={"Authorization": "Bearer BQBAOwM0UbhUL7mzG0JIkeMw2RYdEmZTFefdoYKseGn7jL3vCF-JyIiWhuEhoaCGx-myGloRhfFh8V9QyMJpxH9B1PyaYig97_-8xkisrusgEpYPvTOgOQUKFtZ9hfRsDVgHxkYGnvA_yo0YgJ29TEI8e4zssic",
         "Accept": "application/json","Content-Type": "application/json"})
-        # giphy_endpoint = "http://api.giphy.com/v1/gifs/search?q=google&limit=500&api_key="
-        # response = urlfetch.fetch(giphy_endpoint).content
-        # json_response = json.loads(response)
-        list_artists=[] #will contain a playlist's artists when it is filled
+        api_json = api.json() #changes Response object 'api' into an itemizable JSON
+        api_text = api.text #changes 'api' into text so it may be viewed
 
-        final_api = api.json() #changes Response object 'api' into an itemizable JSON
+        #ANALYZING THE RECEIVED INFORMATION (FIRST 100 SONGS)----------------------
+        list_artists=[] #will contain a playlist's artists when it is filled (names)
+        list_songs=[] #will contain a playlist's songs when it is filled (unique song ID's)
+        songs_analyzed_count = 0
 
-        print("about to start iteming")#test print statement
-        for item in final_api["tracks"]["items"]:
+        for item in api_json["tracks"]["items"]: #this adds every new artist to list_artists
+            songs_analyzed_count += 1
             try:
-                list_artists.append(item["track"]["album"]["artists"][0]["name"])
-                print("success!")
+                if item["track"]["album"]["artists"][0]["name"] not in list_artists:
+                    list_artists.append(item["track"]["album"]["artists"][0]["name"])
+                    print("success!")
+                else:
+                    print("artist already in list!")
             except (UnicodeEncodeError, IndexError):
-                print("whoops lol")
+                print("an error has occurred")
 
-        tracks = final_api["tracks"]["items"]
-        api2 = api.text
+        total_tracks = api_json["tracks"]["total"] #this is necessary as the next_api_json is formatted differently
 
-        for item in list_artists:
+        while total_tracks > 100: #spotify api only returns first 100 songs, so we need to request more
+            next_api = requests.get(api_json["tracks"]["next"],
+            headers={"Authorization": "Bearer BQBAOwM0UbhUL7mzG0JIkeMw2RYdEmZTFefdoYKseGn7jL3vCF-JyIiWhuEhoaCGx-myGloRhfFh8V9QyMJpxH9B1PyaYig97_-8xkisrusgEpYPvTOgOQUKFtZ9hfRsDVgHxkYGnvA_yo0YgJ29TEI8e4zssic",
+            "Accept": "application/json","Content-Type": "application/json"})
+            next_api_json = next_api.json()
+            next_api_text = next_api.text
+
+            for item in range(1, len(next_api_json["items"])): #this adds every new artist to list_artists
+                x = next_api_json["items"][item]
+                songs_analyzed_count += 1
+                try:
+                    if x["track"]["artists"][0]["name"] not in list_artists: #the formatting here is different than above, don't be fooled
+                        list_artists.append(x["track"]["artists"][0]["name"])
+                        print("success!")
+                    else:
+                        print("artist already in list!")
+                except (UnicodeEncodeError, IndexError):
+                    print("an error has occurred")
+
+            total_tracks -= 100
+
+        for item in list_artists: #this is a test printer that prints the artists to console
             try:
                 print item #find artists printed out in the console
             except (UnicodeEncodeError, IndexError): #the Beyonce Error
                 item = item.encode('utf-8')
                 print item
 
-        dict = {
-            "api_json": api2,
+        print(songs_analyzed_count)
+
+        dict = { #dictionary that will be passed to the start_template
+            "text": api_text,
+            "next_text": next_api_text,
             "test":"hello",
             "artists":list_artists
         }
@@ -82,13 +99,13 @@ class MainPage(webapp2.RequestHandler):
     #     variable_dict = {'fav_food_for_view': the_fav_food}
     #     end_template = jinja_current_dir.get_template("templates/results.html")
     #     self.response.write(end_template.render(variable_dict))
-#
-# class ResultsPage(webapp2.RequestHandler):
-#     def get(self):
-#         food_list_template = jinja_current_dir.get_template("templates/foodlist.html")
-#         fav_foods = Food.query().order(-Food.food_name).fetch(3)
-#         dict_for_template = {'top_fav_foods': fav_foods}
-#         self.response.write(food_list_template.render(dict_for_template))
+
+class ResultsPage(webapp2.RequestHandler):
+    def get(self):
+        food_list_template = jinja_current_dir.get_template("templates/foodlist.html")
+        fav_foods = Food.query().order(-Food.food_name).fetch(3)
+        dict_for_template = {'top_fav_foods': fav_foods}
+        self.response.write(food_list_template.render(dict_for_template))
 
 app = webapp2.WSGIApplication([
     ('/', MainPage),
