@@ -237,7 +237,7 @@ class MainPage(webapp2.RequestHandler):
             "d_artists_2":dict_artists_2,
         }
 
-        start_template = jinja_current_dir.get_template("templates/welcome.html")
+        start_template = jinja_current_dir.get_template("templates/homepage.html")
         self.response.write(start_template.render(dict))
 
     # def post(self):
