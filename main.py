@@ -29,7 +29,7 @@ class ResultsPage(webapp2.RequestHandler):
     def get(self):
         #CALLING THE SPOTIFY API FOR THE FIRST PLAYLIST-1-1-1-1-1-1-1-1-1-1-1-1-1-1
         api = requests.get("https://api.spotify.com/v1/users/mirrorkey/playlists/3QnM2I2B8vZYEqhignp37n/", #tracks?offset=100
-        headers={"Authorization": "Bearer BQBju9G1HdDh_nBpuK9-D707MIG1bu-TAUoje4UrD_QvGOWftTMNBEi9dnjLvrPLLIkn5eVhbvSKWxJIb6WLqnOsN866_OATDT2bsufpizWkRPllMeHm68d3nrbLM9jv7WLGzGliXp6EKO9Lm7GxXvHkAfJzSiQ",
+        headers={"Authorization": "Bearer BQDuyY3lOC1mn5AjKYiscfyXpj_8okLC00UuCGBBsHjIyOdodFyudi_hXeeudfDpVMr8c99Cf7jUaDjY6n-SfWTiO8Sc2-FlMsMs5ratmMGj7gkPCIRnC5TJ858ZJfbkExePxT-2Nr0U4wzj8R-e2zDB2IzNdBw",
         "Accept": "application/json","Content-Type": "application/json"})
         api_json = api.json() #changes Response object 'api' into an itemizable JSON
         api_text = api.text #changes Response object 'api' into text so it may be passed to jinja
@@ -77,13 +77,13 @@ class ResultsPage(webapp2.RequestHandler):
             if flag == 0:
                 print("doing songs 100-200")
                 next_api = requests.get(api_json["tracks"]["next"], #calls 0-100 song json
-                headers={"Authorization": "Bearer BQBju9G1HdDh_nBpuK9-D707MIG1bu-TAUoje4UrD_QvGOWftTMNBEi9dnjLvrPLLIkn5eVhbvSKWxJIb6WLqnOsN866_OATDT2bsufpizWkRPllMeHm68d3nrbLM9jv7WLGzGliXp6EKO9Lm7GxXvHkAfJzSiQ",
+                headers={"Authorization": "Bearer BQDuyY3lOC1mn5AjKYiscfyXpj_8okLC00UuCGBBsHjIyOdodFyudi_hXeeudfDpVMr8c99Cf7jUaDjY6n-SfWTiO8Sc2-FlMsMs5ratmMGj7gkPCIRnC5TJ858ZJfbkExePxT-2Nr0U4wzj8R-e2zDB2IzNdBw",
                 "Accept": "application/json","Content-Type": "application/json"})
                 flag = 1 #ensures this will only run for song breakdown 100-200
             elif total_tracks_left > 100: #ANALYSIS SONGS 200+
                 print("doing songs 200+")
                 next_api = requests.get(next_api_json["next"], #if total_tracks_left < 100, there will be no "next"
-                headers={"Authorization": "Bearer BQBju9G1HdDh_nBpuK9-D707MIG1bu-TAUoje4UrD_QvGOWftTMNBEi9dnjLvrPLLIkn5eVhbvSKWxJIb6WLqnOsN866_OATDT2bsufpizWkRPllMeHm68d3nrbLM9jv7WLGzGliXp6EKO9Lm7GxXvHkAfJzSiQ",
+                headers={"Authorization": "Bearer BQDuyY3lOC1mn5AjKYiscfyXpj_8okLC00UuCGBBsHjIyOdodFyudi_hXeeudfDpVMr8c99Cf7jUaDjY6n-SfWTiO8Sc2-FlMsMs5ratmMGj7gkPCIRnC5TJ858ZJfbkExePxT-2Nr0U4wzj8R-e2zDB2IzNdBw",
                 "Accept": "application/json","Content-Type": "application/json"})
 
             next_api_json = next_api.json()
@@ -125,7 +125,7 @@ class ResultsPage(webapp2.RequestHandler):
 
         #CALLING THE SPOTIFY API FOR THE SECOND PLAYLIST-2-2-2-2-2-2-2-2-2-2-2-2-2-2-2-2-2-2-2
         api_2 = requests.get("https://api.spotify.com/v1/users/tomvestuto/playlists/7dMD9LPqoXwMXdG8syTm8q/", #tracks?offset=100
-        headers={"Authorization": "Bearer BQBju9G1HdDh_nBpuK9-D707MIG1bu-TAUoje4UrD_QvGOWftTMNBEi9dnjLvrPLLIkn5eVhbvSKWxJIb6WLqnOsN866_OATDT2bsufpizWkRPllMeHm68d3nrbLM9jv7WLGzGliXp6EKO9Lm7GxXvHkAfJzSiQ",
+        headers={"Authorization": "Bearer BQDuyY3lOC1mn5AjKYiscfyXpj_8okLC00UuCGBBsHjIyOdodFyudi_hXeeudfDpVMr8c99Cf7jUaDjY6n-SfWTiO8Sc2-FlMsMs5ratmMGj7gkPCIRnC5TJ858ZJfbkExePxT-2Nr0U4wzj8R-e2zDB2IzNdBw",
         "Accept": "application/json","Content-Type": "application/json"})
         api_json_2 = api_2.json() #changes Response object 'api' into an itemizable JSON
         api_text_2 = api_2.text #changes Response object 'api' into text so it may be passed to jinja
@@ -173,13 +173,13 @@ class ResultsPage(webapp2.RequestHandler):
             if flag_2 == 0:
                 print("doing songs 100-200")
                 next_api_2 = requests.get(api_json_2["tracks"]["next"], #calls 0-100 song json
-                headers={"Authorization": "Bearer BQBju9G1HdDh_nBpuK9-D707MIG1bu-TAUoje4UrD_QvGOWftTMNBEi9dnjLvrPLLIkn5eVhbvSKWxJIb6WLqnOsN866_OATDT2bsufpizWkRPllMeHm68d3nrbLM9jv7WLGzGliXp6EKO9Lm7GxXvHkAfJzSiQ",
+                headers={"Authorization": "Bearer BQDuyY3lOC1mn5AjKYiscfyXpj_8okLC00UuCGBBsHjIyOdodFyudi_hXeeudfDpVMr8c99Cf7jUaDjY6n-SfWTiO8Sc2-FlMsMs5ratmMGj7gkPCIRnC5TJ858ZJfbkExePxT-2Nr0U4wzj8R-e2zDB2IzNdBw",
                 "Accept": "application/json","Content-Type": "application/json"})
                 flag_2 = 1 #ensures this will only run for song breakdown 100-200
             elif total_tracks_left_2 > 100: #ANALYSIS SONGS 200+
                 print("doing songs 200+")
                 next_api_2 = requests.get(next_api_json_2["next"], #if total_tracks_left < 100, there will be no "next"
-                headers={"Authorization": "Bearer BQBju9G1HdDh_nBpuK9-D707MIG1bu-TAUoje4UrD_QvGOWftTMNBEi9dnjLvrPLLIkn5eVhbvSKWxJIb6WLqnOsN866_OATDT2bsufpizWkRPllMeHm68d3nrbLM9jv7WLGzGliXp6EKO9Lm7GxXvHkAfJzSiQ",
+                headers={"Authorization": "Bearer BQDuyY3lOC1mn5AjKYiscfyXpj_8okLC00UuCGBBsHjIyOdodFyudi_hXeeudfDpVMr8c99Cf7jUaDjY6n-SfWTiO8Sc2-FlMsMs5ratmMGj7gkPCIRnC5TJ858ZJfbkExePxT-2Nr0U4wzj8R-e2zDB2IzNdBw",
                 "Accept": "application/json","Content-Type": "application/json"})
 
             next_api_json_2 = next_api_2.json()
@@ -252,7 +252,6 @@ class ResultsPage(webapp2.RequestHandler):
     #     end_template = jinja_current_dir.get_template("templates/results.html")
     #     self.response.write(end_template.render(variable_dict))
 
-# Best handler ever!
 class MainPage(webapp2.RequestHandler):
     def get(self):
         start_template = jinja_current_dir.get_template("templates/homepage.html")
@@ -291,18 +290,21 @@ class FinalPage(webapp2.RequestHandler):
             if secondurl_list[index] == "user":
                 secondurl_userid = secondurl_list[index+1]
 
+        print("after iterating through " + secondurl + ", we have determined that the userid is " +
+            str(secondurl_userid) + "and the apistring is " + str(secondurl_apistring))
         print(firsturl_userid)
         print(secondurl_userid)
         print(secondurl_apistring)
         print(firsturl_apistring)
 
         #CALLING THE SPOTIFY API FOR THE FIRST PLAYLIST-1-1-1-1-1-1-1-1-1-1-1-1-1-1
-        api = requests.get("https://api.spotify.com/v1/users/"+ firsturl_userid +"/playlists/" + firsturl_apistring + "/", #tracks?offset=100
-        headers={"Authorization": "Bearer BQBju9G1HdDh_nBpuK9-D707MIG1bu-TAUoje4UrD_QvGOWftTMNBEi9dnjLvrPLLIkn5eVhbvSKWxJIb6WLqnOsN866_OATDT2bsufpizWkRPllMeHm68d3nrbLM9jv7WLGzGliXp6EKO9Lm7GxXvHkAfJzSiQ",
+        api = requests.get("https://api.spotify.com/v1/users/"+firsturl_userid+"/playlists/"+firsturl_apistring+"/", #tracks?offset=100
+        headers={"Authorization": "Bearer BQDuyY3lOC1mn5AjKYiscfyXpj_8okLC00UuCGBBsHjIyOdodFyudi_hXeeudfDpVMr8c99Cf7jUaDjY6n-SfWTiO8Sc2-FlMsMs5ratmMGj7gkPCIRnC5TJ858ZJfbkExePxT-2Nr0U4wzj8R-e2zDB2IzNdBw",
         "Accept": "application/json","Content-Type": "application/json"})
         api_json = api.json() #changes Response object 'api' into an itemizable JSON
         api_text = api.text #changes Response object 'api' into text so it may be passed to jinja
-        print(api)
+        # print(api_text)
+
         #ANALYZING THE RECEIVED INFORMATION - FIRST PLAYLIST (FIRST 100 SONGS)----------------------
         username_1 = ""
         list_artists=[] #contains an unordered list of artist names
@@ -323,9 +325,9 @@ class FinalPage(webapp2.RequestHandler):
                 if item["track"]["album"]["artists"][0]["name"] not in list_artists:
                     list_artists.append(item["track"]["album"]["artists"][0]["name"])
                     dict_artists[item["track"]["artists"][0]["name"]] = 1
-                    print("success! " + item["track"]["artists"][0]["name"])
+                    # print("success! " + item["track"]["artists"][0]["name"])
                 else:
-                    print("artist " + item["track"]["artists"][0]["name"] + " already in list!")
+                    # print("artist " + item["track"]["artists"][0]["name"] + " already in list!")
                     if item["track"]["artists"][0]["name"] in dict_artists:
                         dict_artists[item["track"]["artists"][0]["name"]] += 1
 
@@ -342,59 +344,63 @@ class FinalPage(webapp2.RequestHandler):
         next_api_json = ""
         next_api_text = ""
 
-        while total_tracks_left > 5: #spotify api only returns first 100 songs, so we need to request more
-            if flag == 0:
-                print("doing songs 100-200")
-                next_api = requests.get(api_json["tracks"]["next"], #calls 0-100 song json
-                headers={"Authorization": "Bearer BQDSRe2lil0J9ksm2KcQVH7yodtRyytrvL4vFImNvkPeNjZgbNLH8Mx3d2z794gF-vkyb27hKWYAEFPkYIYhrBzoTcbKYVKE1dVkogCEy8W9Xm_Q1cLFDJzZYb3as9wWWlnPIA13hsOwstsZr5HKzCyN7jptQeg",
-                "Accept": "application/json","Content-Type": "application/json"})
-                flag = 1 #ensures this will only run for song breakdown 100-200
-            elif total_tracks_left > 100: #ANALYSIS SONGS 200+
-                print("doing songs 200+")
-                next_api = requests.get(next_api_json["next"], #if total_tracks_left < 100, there will be no "next"
-                headers={"Authorization": "Bearer BQDSRe2lil0J9ksm2KcQVH7yodtRyytrvL4vFImNvkPeNjZgbNLH8Mx3d2z794gF-vkyb27hKWYAEFPkYIYhrBzoTcbKYVKE1dVkogCEy8W9Xm_Q1cLFDJzZYb3as9wWWlnPIA13hsOwstsZr5HKzCyN7jptQeg",
-                "Accept": "application/json","Content-Type": "application/json"})
+        if total_tracks_left > 100:
+            while total_tracks_left > 5: #spotify api only returns first 100 songs, so we need to request more
+                if flag == 0:
+                    print("doing songs 100-200")
+                    next_api = requests.get(api_json["tracks"]["next"], #calls 0-100 song json
+                    headers={"Authorization": "Bearer BQDuyY3lOC1mn5AjKYiscfyXpj_8okLC00UuCGBBsHjIyOdodFyudi_hXeeudfDpVMr8c99Cf7jUaDjY6n-SfWTiO8Sc2-FlMsMs5ratmMGj7gkPCIRnC5TJ858ZJfbkExePxT-2Nr0U4wzj8R-e2zDB2IzNdBw",
+                    "Accept": "application/json","Content-Type": "application/json"})
+                    flag = 1 #ensures this will only run for song breakdown 100-200
+                elif total_tracks_left > 100: #ANALYSIS SONGS 200+
+                    print("doing songs 200+")
+                    next_api = requests.get(next_api_json["next"], #if total_tracks_left < 100, there will be no "next"
+                    headers={"Authorization": "Bearer BQDuyY3lOC1mn5AjKYiscfyXpj_8okLC00UuCGBBsHjIyOdodFyudi_hXeeudfDpVMr8c99Cf7jUaDjY6n-SfWTiO8Sc2-FlMsMs5ratmMGj7gkPCIRnC5TJ858ZJfbkExePxT-2Nr0U4wzj8R-e2zDB2IzNdBw",
+                    "Accept": "application/json","Content-Type": "application/json"})
 
-            next_api_json = next_api.json()
-            next_api_text = next_api.text
+                next_api_json = next_api.json()
+                next_api_text = next_api.text
+                # print(next_api_text)
+                # print(next_api_json["items"])
 
-            for item in range(1, len(next_api_json["items"])): #this adds every new artist to list_artists
-                x = next_api_json["items"][item]
-                songs_analyzed_count += 1
-                try:
-                    if x["track"]["artists"][0]["name"] not in list_artists: #the formatting here is different than above, don't be fooled
-                        list_artists.append(x["track"]["artists"][0]["name"])
-                        dict_artists[x["track"]["artists"][0]["name"]] = 1
-                        print("success! " + x["track"]["artists"][0]["name"])
-                    else:
-                        print("artist " + x["track"]["artists"][0]["name"] + " already in list!")
-                        if x["track"]["artists"][0]["name"] in dict_artists:
-                            dict_artists[x["track"]["artists"][0]["name"]] += 1
-                except (UnicodeEncodeError, IndexError, UnicodeDecodeError):
-                    print("an error has occurred")
+                for item in range(1, len(next_api_json["items"])): #this adds every new artist to list_artists
+                    x = next_api_json["items"][item]
+                    songs_analyzed_count += 1
+                    try:
+                        if x["track"]["artists"][0]["name"] not in list_artists: #the formatting here is different than above, don't be fooled
+                            list_artists.append(x["track"]["artists"][0]["name"])
+                            dict_artists[x["track"]["artists"][0]["name"]] = 1
+                            # print("success! " + x["track"]["artists"][0]["name"])
+                        else:
+                            # print("artist " + x["track"]["artists"][0]["name"] + " already in list!")
+                            if x["track"]["artists"][0]["name"] in dict_artists:
+                                dict_artists[x["track"]["artists"][0]["name"]] += 1
+                    except (UnicodeEncodeError, IndexError, UnicodeDecodeError):
+                        print("an error has occurred")
 
-            total_tracks_left -= 100
-            print("Finished the next 100 songs, " + str(total_tracks_left) + " songs left")
+                total_tracks_left -= 100
+                print("Finished the next 100 songs, " + str(total_tracks_left) + " songs left")
 
-        for item in list_artists: #this is a test printer that prints the artists to console
-            try: #it will be removed later
-                print item #find artists printed out in the console
-            except (UnicodeEncodeError, IndexError): #the Beyonce Error
-                item = item.encode('utf-8')
-                print item
+        # for item in list_artists: #this is a test printer that prints the artists to console
+        #     try: #it will be removed later
+        #         print item #find artists printed out in the console
+        #     except (UnicodeEncodeError, IndexError): #the Beyonce Error
+        #         item = item.encode('utf-8')
+        #         print item
 
         print(songs_analyzed_count)
-        print(dict_artists)
+        # print(dict_artists)
         for w in sorted(dict_artists, key=dict_artists.get, reverse=True): #this orders the dictionary by artist appearance and puts it into a new ordered list
-            print w, dict_artists[w] #key, value
+            # print w, dict_artists[w] #key, value
             list_artists_ordered.append(w)
             list_songs_ordered.append(dict_artists[w])
         print("finished printing Playlist 1s artists")
 
 
         #CALLING THE SPOTIFY API FOR THE SECOND PLAYLIST-2-2-2-2-2-2-2-2-2-2-2-2-2-2-2-2-2-2-2
+        print("passing " + secondurl_userid + " and " + secondurl_apistring + " to api_2")
         api_2 = requests.get("https://api.spotify.com/v1/users/"+ secondurl_userid +"/playlists/" + secondurl_apistring + "/", #tracks?offset=100
-        headers={"Authorization": "Bearer BQDSRe2lil0J9ksm2KcQVH7yodtRyytrvL4vFImNvkPeNjZgbNLH8Mx3d2z794gF-vkyb27hKWYAEFPkYIYhrBzoTcbKYVKE1dVkogCEy8W9Xm_Q1cLFDJzZYb3as9wWWlnPIA13hsOwstsZr5HKzCyN7jptQeg",
+        headers={"Authorization": "Bearer BQDuyY3lOC1mn5AjKYiscfyXpj_8okLC00UuCGBBsHjIyOdodFyudi_hXeeudfDpVMr8c99Cf7jUaDjY6n-SfWTiO8Sc2-FlMsMs5ratmMGj7gkPCIRnC5TJ858ZJfbkExePxT-2Nr0U4wzj8R-e2zDB2IzNdBw",
         "Accept": "application/json","Content-Type": "application/json"})
         api_json_2 = api_2.json() #changes Response object 'api' into an itemizable JSON
         api_text_2 = api_2.text #changes Response object 'api' into text so it may be passed to jinja
@@ -419,9 +425,9 @@ class FinalPage(webapp2.RequestHandler):
                 if item["track"]["album"]["artists"][0]["name"] not in list_artists_2:
                     list_artists_2.append(item["track"]["album"]["artists"][0]["name"])
                     dict_artists_2[item["track"]["artists"][0]["name"]] = 1
-                    print("success! " + item["track"]["artists"][0]["name"])
+                    # print("success! " + item["track"]["artists"][0]["name"])
                 else:
-                    print("artist " + item["track"]["artists"][0]["name"] + " already in list!")
+                    # print("artist " + item["track"]["artists"][0]["name"] + " already in list!")
                     if item["track"]["artists"][0]["name"] in dict_artists_2:
                         dict_artists_2[item["track"]["artists"][0]["name"]] += 1
 
@@ -438,49 +444,51 @@ class FinalPage(webapp2.RequestHandler):
         next_api_json_2 = ""
         next_api_text_2 = ""
 
-        while total_tracks_left_2 > 5: #spotify api only returns first 100 songs, so we need to request more
-            if flag_2 == 0:
-                print("doing songs 100-200")
-                next_api_2 = requests.get(api_json_2["tracks"]["next"], #calls 0-100 song json
-                headers={"Authorization": "Bearer BQDSRe2lil0J9ksm2KcQVH7yodtRyytrvL4vFImNvkPeNjZgbNLH8Mx3d2z794gF-vkyb27hKWYAEFPkYIYhrBzoTcbKYVKE1dVkogCEy8W9Xm_Q1cLFDJzZYb3as9wWWlnPIA13hsOwstsZr5HKzCyN7jptQeg",
-                "Accept": "application/json","Content-Type": "application/json"})
-                flag_2 = 1 #ensures this will only run for song breakdown 100-200
-            elif total_tracks_left_2 > 100: #ANALYSIS SONGS 200+
-                print("doing songs 200+")
-                next_api_2 = requests.get(next_api_json_2["next"], #if total_tracks_left < 100, there will be no "next"
-                headers={"Authorization": "Bearer BQDSRe2lil0J9ksm2KcQVH7yodtRyytrvL4vFImNvkPeNjZgbNLH8Mx3d2z794gF-vkyb27hKWYAEFPkYIYhrBzoTcbKYVKE1dVkogCEy8W9Xm_Q1cLFDJzZYb3as9wWWlnPIA13hsOwstsZr5HKzCyN7jptQeg",
-                "Accept": "application/json","Content-Type": "application/json"})
+        if total_tracks_left_2 > 100:
+            while total_tracks_left_2 > 5: #spotify api only returns first 100 songs, so we need to request more
+                if flag_2 == 0 and api_json_2["tracks"]["total"] > 100:
+                    print("doing songs 100-200")
+                    next_api_2 = requests.get(api_json_2["tracks"]["next"], #calls 0-100 song json
+                    headers={"Authorization": "Bearer BQDuyY3lOC1mn5AjKYiscfyXpj_8okLC00UuCGBBsHjIyOdodFyudi_hXeeudfDpVMr8c99Cf7jUaDjY6n-SfWTiO8Sc2-FlMsMs5ratmMGj7gkPCIRnC5TJ858ZJfbkExePxT-2Nr0U4wzj8R-e2zDB2IzNdBw",
+                    "Accept": "application/json","Content-Type": "application/json"})
+                    flag_2 = 1 #ensures this will only run for song breakdown 100-200
+                elif total_tracks_left_2 > 100: #ANALYSIS SONGS 200+
+                    print("doing songs 200+")
+                    next_api_2 = requests.get(next_api_json_2["next"], #if total_tracks_left < 100, there will be no "next"
+                    headers={"Authorization": "Bearer BQDuyY3lOC1mn5AjKYiscfyXpj_8okLC00UuCGBBsHjIyOdodFyudi_hXeeudfDpVMr8c99Cf7jUaDjY6n-SfWTiO8Sc2-FlMsMs5ratmMGj7gkPCIRnC5TJ858ZJfbkExePxT-2Nr0U4wzj8R-e2zDB2IzNdBw",
+                    "Accept": "application/json","Content-Type": "application/json"})
 
-            next_api_json_2 = next_api_2.json()
-            next_api_text_2 = next_api_2.text
 
-            for item in range(1, len(next_api_json["items"])): #this adds every new artist to list_artists
-                x = next_api_json_2["items"][item]
-                songs_analyzed_count_2 += 1
-                try:
-                    if x["track"]["artists"][0]["name"] not in list_artists_2: #the formatting here is different than above, don't be fooled
-                        list_artists_2.append(x["track"]["artists"][0]["name"])
-                        dict_artists_2[x["track"]["artists"][0]["name"]] = 1
-                        print("success! " + x["track"]["artists"][0]["name"])
-                    else:
-                        print("artist " + x["track"]["artists"][0]["name"] + " already in list!")
-                        if x["track"]["artists"][0]["name"] in dict_artists_2:
-                            dict_artists_2[x["track"]["artists"][0]["name"]] += 1
-                except (UnicodeEncodeError, IndexError, UnicodeDecodeError):
-                    print("an error has occurred")
+                next_api_json_2 = next_api_2.json()
+                next_api_text_2 = next_api_2.text
 
-            total_tracks_left_2 -= 100
-            print("Finished the next 100 songs, " + str(total_tracks_left_2) + " songs left")
+                for item in range(1, len(next_api_json_2["items"])): #this adds every new artist to list_artists
+                    x = next_api_json_2["items"][item]
+                    songs_analyzed_count_2 += 1
+                    try:
+                        if x["track"]["artists"][0]["name"] not in list_artists_2: #the formatting here is different than above, don't be fooled
+                            list_artists_2.append(x["track"]["artists"][0]["name"])
+                            dict_artists_2[x["track"]["artists"][0]["name"]] = 1
+                            # print("success! " + x["track"]["artists"][0]["name"])
+                        else:
+                            # print("artist " + x["track"]["artists"][0]["name"] + " already in list!")
+                            if x["track"]["artists"][0]["name"] in dict_artists_2:
+                                dict_artists_2[x["track"]["artists"][0]["name"]] += 1
+                    except (UnicodeEncodeError, IndexError, UnicodeDecodeError):
+                        print("an error has occurred")
 
-        for item in list_artists_2: #this is a test printer that prints the artists to console
-            try: #it will be removed later
-                print item #find artists printed out in the console
-            except (UnicodeEncodeError, IndexError): #the Beyonce Error
-                item = item.encode('utf-8')
-                print item
+                total_tracks_left_2 -= 100
+                print("Finished the next 100 songs, " + str(total_tracks_left_2) + " songs left")
+
+        # for item in list_artists_2: #this is a test printer that prints the artists to console
+        #     try: #it will be removed later
+        #         print item #find artists printed out in the console
+        #     except (UnicodeEncodeError, IndexError): #the Beyonce Error
+        #         item = item.encode('utf-8')
+        #         print item
 
         print(songs_analyzed_count_2)
-        print(dict_artists_2)
+        # print(dict_artists_2)
 
         for w in sorted(dict_artists_2, key=dict_artists_2.get, reverse=True): #this orders the dictionary by artist appearance and puts it into a new ordered list
             print w, dict_artists_2[w] #key, value
@@ -508,12 +516,14 @@ class FinalPage(webapp2.RequestHandler):
             "url_2": secondurl,
             "apistring_1": firsturl_apistring,
             "apistring_2": secondurl_apistring,
+            "userid_1": firsturl_userid,
+            "userid_2": secondurl_userid,
             "name_1": firstname,
             "name_2": secondname,
             }
 
         start_template = jinja_current_dir.get_template("templates/results.html")
-        self.response.write(start_template.render(url_dict))
+        self.response.write(start_template.render(dict))
 
 class AboutUsPage(webapp2.RequestHandler):
     def get(self):
