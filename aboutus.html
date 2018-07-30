@@ -27,18 +27,86 @@
         background: linear-gradient(#616161, #212121);
       }
       img {
+        position: relative;
         border-radius: 50%;
+        top: 15%;
+        box-shadow: 2px 5px 25px -5px #000;
+      }
+      iframe {
+        position: relative;
+        top: 20%;
+      }
+      .helen {
+        width: 200px;
+        height: 200px;
+        float: left;
+        margin: 10px;
+        padding: 0;
+        position: relative;
+        background: #cccccc;
+        border-radius: 50%;
+        overflow: hidden;
       }
 
+      .helen .text-2 {
+        width: 200px;
+        height: 200px;
+        top: 0;
+        left: 0;
+        position: absolute;
+        background: rgba(255, 255, 255, 0.75);
+        border-radius: 50%;
+        -webkit-transform: scale(0);
+        transform: scale(0);
+        -webkit-transition: all 0.7s ease;
+        transition: all 0.7s ease;
+      }
+
+      .helen:hover .text-2 {
+        -webkit-transform: scale(1);
+        transform: scale(1);
+        background: rgba(255, 255, 255, 0.75);
+        -webkit-box-shadow: 0px 0px 15px 2px rgba(255, 255, 255, .75);
+        box-shadow: 0px 0px 15px 2px rgba(255, 255, 255, .75);
+      }
+
+      .text-2 h3 {
+        font-size: 20px;
+        text-align: center;
+        margin: 40px 20px 0 20px;
+        padding-bottom: 5px;
+        border-bottom: 3px double #000000;
+      }
+
+      .text-2 p {
+        margin: 10px 0 0 0;
+        text-align: center;
+      }
     </style>
     <meta charset="utf-8">
     <title></title>
   </head>
   <body>
     <div class="row">
-      <div class= "about"><img src="https://www.clearvoice.com/wp-content/uploads/2015/11/google.jpg" style="margin:auto; width:200px;display:block"/></div>
-      <div class= "about"><img src="https://www.clearvoice.com/wp-content/uploads/2015/11/google.jpg" style="margin:auto; width:200px;display:block"/></div>
-      <div class= "about"><img src="https://www.clearvoice.com/wp-content/uploads/2015/11/google.jpg" style="margin:auto; width:200px;display:block"/></div>
+      <div class= "zach">
+        <img src="https://www.clearvoice.com/wp-content/uploads/2015/11/google.jpg" style="margin:auto; width:200px;display:block"/>
+        <iframe src="https://open.spotify.com/embed/user/joon_z/playlist/36xR1rJZimMQAJTAYhjWAQ" style="margin:auto; display:block; box-shadow: 2px 5px 25px -5px #000;" width="300" height="380" frameborder="0" allowtransparency="true" allow="encrypted-media">
+        </iframe>
+      </div>
+      <div class= "melanie">
+        <img src="https://www.clearvoice.com/wp-content/uploads/2015/11/google.jpg" style="margin:auto; width:200px;display:block"/>
+        <iframe src="https://open.spotify.com/embed/user/mirrorkey/playlist/3QnM2I2B8vZYEqhignp37n" style="margin:auto; display:block; box-shadow: 2px 5px 25px -5px #000;" width="300" height="380" frameborder="0" allowtransparency="true" allow="encrypted-media">
+        </iframe>
+      </div>
+      <div class= "helen">
+        <img src="https://www.clearvoice.com/wp-content/uploads/2015/11/google.jpg" style="margin:auto; width:200px;display:block"/>
+        <div class="text-2">
+          <h3>Lorem ipsum</h3>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+        </div>
+        <iframe src="https://open.spotify.com/embed/user/helen.asdfghjkl/playlist/3NFTLe4leeuHishwDKeB73" style="margin:auto; display:block; box-shadow: 2px 5px 25px -5px #000;" width="300" height="380" frameborder="0" allowtransparency="true" allow="encrypted-media">
+        </iframe>
+      </div>
 
     </div>
   </body>
