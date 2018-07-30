@@ -252,6 +252,7 @@ class ResultsPage(webapp2.RequestHandler):
     #     end_template = jinja_current_dir.get_template("templates/results.html")
     #     self.response.write(end_template.render(variable_dict))
 
+# Best handler ever!
 class MainPage(webapp2.RequestHandler):
     def get(self):
         start_template = jinja_current_dir.get_template("templates/homepage.html")
