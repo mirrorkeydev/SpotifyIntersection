@@ -2,8 +2,7 @@
 <html lang="en" dir="ltr">
   <head>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <script>
-    </script>
+
     <style>
       html, body {
         margin: 0;
@@ -15,8 +14,8 @@
       }
       .container2 {
         margin: auto;
-        top: 5%;
-        left: 90%;
+        top: 7.5%;
+        left: 4.8%;
         margin-left: -20px;
       }
       #toggle {
@@ -26,6 +25,7 @@
       z-index: 999;
       width: 41px;
       height: 41px;
+      margin-left: 5px;
       background: #a5d6a7;
       text-align: center;
       border-radius: 100%;
@@ -64,7 +64,7 @@
       }
 
       #toggle:checked ~ .button {
-        transform: rotate(135deg);
+        transform: rotate(90deg);
         box-shadow: 0 0 0 0 transparent;
       }
       body {
@@ -135,18 +135,22 @@
         font-size: 30px;
         vertical-align: middle;
       }
+
     </style>
     <meta charset="utf-8">
     <title>spotify</title>
   </head>
   <body>
+
     <div class="container2">
-      <input type="checkbox" id="toggle" />
-      <label class="button" for="toggle"><i class="material-icons">add</i></label>
+      <input type="checkbox" id="toggle">
+      <label class="button" for="toggle"><i class="material-icons">menu</i></label>
       <nav class="nav">
         <a href="/about-us" target="_blank">about us</a>
+        <a href="/about" target="_blank">about app</a>
       </nav>
     </div>
+
     <center>
       <h1>s.bud.ify</h1>
       <div class="container">
