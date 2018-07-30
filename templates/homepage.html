@@ -5,6 +5,8 @@
     <script>
     </script>
     <style>
+    @import url('https://fonts.googleapis.com/css?family=Quicksand');
+    @import url('https://fonts.googleapis.com/css?family=Montserrat');
       html, body {
         margin: 0;
         height: 100%;
@@ -26,7 +28,7 @@
       z-index: 999;
       width: 41px;
       height: 41px;
-      background: #a5d6a7;
+      background: #94af76;
       text-align: center;
       border-radius: 100%;
       background-image: add;
@@ -53,7 +55,7 @@
         margin: 25px;
         color: #757575;
         text-decoration: none;
-        font-family: 'Montserrat', sans-serif;
+        font-family: 'Quicksand';
         font-size: 15px;
         font-weight: lighter;
       }
@@ -68,17 +70,24 @@
         box-shadow: 0 0 0 0 transparent;
       }
       body {
-        font-family: 'Montserrat', sans-serif;
-        background-color: #212121;
-        background: linear-gradient(#616161, #212121);
+        font-family: 'Quicksand';
+        /* background-color: #212121;
+        background: linear-gradient(#616161, #212121); */
         font-size: 30px;
+        background-color: #dcedc8;
+        background: linear-gradient(#f1f8e9, #dcedc8);
         color: white;
+      }
+      h1 {
+        color: #add681;
       }
       .container {
         width: 550px;
         height: 600px;
-        background-color: #00c853;
-        box-shadow: 10px 10px  #424242;
+        /* background-color: #00c853; */
+        background-color: #add681;
+        /* box-shadow: 10px 10px  #424242; */
+        box-shadow: 10px 10px #94af76;
         border-radius: 2px;
       }
 
@@ -89,7 +98,7 @@
         box-sizing: border-box;
         border: none;
         border-bottom: 1px solid #757575;
-        background-color: #00c853;
+        background-color: #add681;
         outline: none ;
         ease-in-out;
         transition: width .35s ease-in-out;
@@ -101,15 +110,16 @@
       }
       ::placeholder {
         color: #757575;
+        font-family: 'Quicksand';
       }
       .pulse-button {
         position: relative;
         width: 100px;
         height: 100px;
         border: none;
-        box-shadow: 0 0 0 0 #a5d6a7;
+        box-shadow: 0 0 0 0 #c5e1a5;
         border-radius: 50%;
-        background-color: #a5d6a7;
+        background-color: #c5e1a5;
         background-image: audiotrack;
         background-repeat: no-repeat;
         cursor: pointer;
@@ -144,11 +154,11 @@
       <input type="checkbox" id="toggle" />
       <label class="button" for="toggle"><i class="material-icons">add</i></label>
       <nav class="nav">
-        <a href="/about-us" target="_blank">about us</a>
+        <a href="/aboutus.html">about us</a>
       </nav>
     </div>
     <center>
-      <h1>spotify.intersector</h1>
+      <h1 style="font-family: 'Quicksand'; font-weight: lighter;">spotify.intersection</h1>
       <div class="container">
         <form method="POST" action= "/final">
           <br><br><br>
