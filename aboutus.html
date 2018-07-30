@@ -17,11 +17,17 @@
       .row {
         display: grid;
         grid-template-columns: auto auto auto;
-        grid-column-gap: 1em;
+        grid-column-gap: .1em;
+        height: 98%;
       }
       .about {
-        background-color: red;
         margin: 10px;
+        height: 100%;
+        background-color: #212121;
+        background: linear-gradient(#616161, #212121);
+      }
+      img {
+        border-radius: 50%;
       }
 
     </style>
@@ -30,9 +36,9 @@
   </head>
   <body>
     <div class="row">
-      <div class= "about">Zach</div>
-      <div class= "about">Melanie</div>
-      <div class= "about">Helen</div>
+      <div class= "about"><img src="https://www.clearvoice.com/wp-content/uploads/2015/11/google.jpg" style="margin:auto; width:200px;display:block"/></div>
+      <div class= "about"><img src="https://www.clearvoice.com/wp-content/uploads/2015/11/google.jpg" style="margin:auto; width:200px;display:block"/></div>
+      <div class= "about"><img src="https://www.clearvoice.com/wp-content/uploads/2015/11/google.jpg" style="margin:auto; width:200px;display:block"/></div>
 
     </div>
   </body>

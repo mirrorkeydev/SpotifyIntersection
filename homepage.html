@@ -2,8 +2,6 @@
 <html lang="en" dir="ltr">
   <head>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <script>
-    </script>
     <style>
       html, body {
         margin: 0;
@@ -24,8 +22,8 @@
       }
       .button {
       z-index: 999;
-      width: 41px;
-      height: 41px;
+      width: 43px;
+      height: 43px;
       background: #a5d6a7;
       text-align: center;
       border-radius: 100%;
@@ -54,7 +52,7 @@
         color: #757575;
         text-decoration: none;
         font-family: 'Montserrat', sans-serif;
-        font-size: 15px;
+        font-size: 1px;
         font-weight: lighter;
       }
 
@@ -64,7 +62,7 @@
       }
 
       #toggle:checked ~ .button {
-        transform: rotate(135deg);
+        transform: rotate(90deg);
         box-shadow: 0 0 0 0 transparent;
 }
       body {
@@ -75,17 +73,16 @@
         color: white;
       }
       .container {
-        width: 550px;
+        width: 600px;
         height: 600px;
         background-color: #00c853;
         box-shadow: 10px 10px  #424242;
-        border-radius: 2px;
       }
 
       input[type=text] {
         width: 60%;
         padding: 10px 5px;
-        margin: 20px 0;
+        margin: 25px 0;
         box-sizing: border-box;
         border: none;
         border-bottom: 1px solid #757575;
@@ -118,7 +115,7 @@
         -ms-animation: pulse 1.25s infinite cubic-bezier(0.66, 0, 0, 1);
         animation: pulse 1.25s infinite cubic-bezier(0.66, 0, 0, 1);
         outline: none;
-        margin-top:60px;
+        margin-top:100px;
       }
       .pulse-button:hover {
         -webkit-animation: none; -moz-animation: none; -ms-animation: none; animation: none;
@@ -144,25 +141,20 @@
       <input type="checkbox" id="toggle" />
       <label class="button" for="toggle"><i class="material-icons">add</i></label>
       <nav class="nav">
-        <a href="/about-us" target="_blank">about us</a>
+        <a href="file:///Users/demouser/Documents/GitHub/CSSI-Project/aboutus.html" target="_blank">iefoiewi</a>
       </nav>
     </div>
     <center>
-      <h1>s.bud.ify</h1>
+      <h1>Spotify</h1>
       <div class="container">
-        <form method="POST" action= "/final">
-          <br><br>
+        <form>
+          <br><br><br>
           <label for="fname"></label>
-          <input type="text" placeholder="first username" id="lname" name="fname">
-          <label for="furl"></label>
-          <input type="text" placeholder="first playlist url" id="lname" name="furl">
+          <input type="text" placeholder="first playlist" id="lname" name="fname">
           <label for="lname"></label>
-          <input type="text" placeholder="second username" id="lname" name="lname">
-          <label for="lurl"></label>
-          <input type="text" placeholder="second playlist url" id="lname" name="lurl">
-          <br>
-          <a href="/final"><button class="pulse-button" type="submit"><i class="material-icons">audiotrack</i></button>
+          <input type="text" placeholder="second playlist" id="lname" name="lname">
         </form>
+          <button onclick="location.href='file:///Users/demouser/Documents/GitHub/CSSI-Project/results.html'" class="pulse-button"><i class="material-icons">audiotrack</i></button>
       </div>
     </center>
   </body>
