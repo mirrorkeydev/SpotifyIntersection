@@ -2,24 +2,31 @@
 --------------------------------------------------------------------------------
 WHAT IS THIS WEB APP?
 --------------------------------------------------------------------------------
-This web app was created as a final project of a 3-week summer program called
-Google CSSI. For 3 weeks we learned how to use html, css, javascript, and google
-appengine. This web app is the culmination of our knowledge from this program.
+This web app was primarily built to find the artists and songs that two playlists
+have in common. After passing in only the two URLs of the playlists, it displays:
+
+-) an individual analysis of each playlist
+
+-) the artists and songs that the playlists have in common.
+
+The web app was created as the final project of CSSI, Google's three-week intensive
+summer program. The camp teaches HTML, CSS, Javascript, Python, Git, and Google
+App Engine. The analysis of the playlists, API calls, and templating are all done 
+in Python, using the Requests library for the API calls and the 
+Jinja2 library for templating.
+
 --------------------------------------------------------------------------------
 WHY USE THIS WEB APP?
 --------------------------------------------------------------------------------
-This web app was built with the purpose to create playlists between your friends
-by creating a new playlist containing songs that both you and your friend likes
-in one of your playlists.
+This web app was designed with use between friends in mind. Assuming each friend
+has a large enough playlist of songs they like (we recommend a having upwards of 500 songs for optimal
+matching), and their song preferences aren't too polar, the web app can find songs
+both friends enjoy. Ideal for everything from road trips to general hangouts.
 
-Imagine this, you are going on a road trip with a friend. To make the drive less
-boring, you two agree to create a road trip playlist. However, both of you guys
-have differing music taste. You like jazz while your friend likes to listen to
-hard rock. What are you going to do? Use this web app of course.
 --------------------------------------------------------------------------------
 HOW TO USE THIS APP
 --------------------------------------------------------------------------------
-1.) Input username 1
-2.) Input a playlist belonging to username 1
-3.) Input username 2
-4.) Input a playlist belonging to username 2
+1.) Visit (future app-engine URL)
+2.) Input the URLs of two playlists
+3.) Press the button!
+
