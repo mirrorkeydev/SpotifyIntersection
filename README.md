@@ -27,6 +27,8 @@ both friends enjoy. Ideal for everything from road trips to general hangouts.
 HOW TO USE THIS APP
 --------------------------------------------------------------------------------
 1.) Visit (future app-engine URL)
+
 2.) Input the URLs of two playlists
+
 3.) Press the button!
 
