@@ -27,6 +27,7 @@
         padding-top: 20px;
       }
       div{
+        padding: 100px;
         width: 100%;
       }
       .container2, .button, .nav{
@@ -85,13 +86,22 @@
       #toggle:checked ~ .button {
         transform: rotate(90deg);
         box-shadow: 0 0 0 0 transparent;
-    }
+      }
       body {
         font-family: 'Montserrat', sans-serif;
         background-color: #212121;
         background: linear-gradient(#616161, #212121);
         font-size: 15px;
         color: white;
+      }
+      a:link {
+      color: white;
+      }
+      a:visited {
+          color: white;
+      }
+      a:hover {
+          color: #1DB954;
       }
       .container {
         width: 600px;
@@ -158,35 +168,10 @@
     <body>
       <center>
       <div>
-        <h3> {{u_1}} and {{u_2}}, your shared songs: </h3>
-        {% for i in range(27)%}
-        {{ c_songs_n[i] }} - {{c_songs_a[i]}}<br>
-        {% endfor %}
+        <h3>Whoops! <br> It looks like you tried to visit the final page without entering any information. <br>
+        Please return to the <a href="/"> main page</a> and enter your information</h3>
+
       </div>
-      <div>
-        <h3> {{u_1}} and {{u_2}}, your shared artists: </h3>
-        {% for i in range(10) %}
-        {{ c_artists[i] }} -
-        {% endfor %}
-      </div>
-      <div>
-        <h3> {{u_1}}, Your Top Artists: </h3>
-        {% for i in range(5) %}
-        <p>{{ l_artists_o[i] }} - {{ l_songs_o[i] }} songs</p>
-        {% endfor %}
-      </div>
-      <div>
-        <h3> {{u_2}}, Your Top Artists: </h3>
-        {% for i in range(5) %}
-        <p>{{ l_artists_o_2[i] }} - {{ l_songs_o_2[i] }} songs</p>
-        {% endfor %}
-      </div>
-      <p> {{url_1}}</p>
-      <p> {{url_2}}</p>
-      <p> {{apistring_1}}</p>
-      <p> {{apistring_2}}</p>
-      <p> {{name_1}}</p>
-      <p> {{name_2}}</p>
       </center>
   </body>
 </html>

@@ -4,7 +4,9 @@ import jinja2
 import requests
 from google.appengine.api import urlfetch
 import json
-#from models import Food #not needed
+import spotipy
+import spotipy.util as util
+from math import trunc
 import unicodedata
 from requests_toolbelt.adapters import appengine
 import sys                          #these 3 lines fix most UnicodeDecodeErrors
@@ -19,10 +21,6 @@ jinja_current_dir = jinja2.Environment( #jinja is used for templating
     extensions=['jinja2.ext.autoescape'],
     autoescape=True)
 
-    #TODO: get started on song count
-    #TODO: Spotify Client Credentials Flow
-    #TOKNOW: There are now 3 places where you need to update the authenticator
-
 class ResultsPage(webapp2.RequestHandler):
     def get(self):
         pass
@@ -34,18 +32,17 @@ class MainPage(webapp2.RequestHandler):
 
 class FinalPage(webapp2.RequestHandler):
     def get(self):
-        start_template = jinja_current_dir.get_template("templates/results.html")
+        start_template = jinja_current_dir.get_template("templates/whoops.html")
         self.response.write(start_template.render())
+
     def post(self):
         #GETTING USER INFORMATION AND EXTRACTING THE APISTRING AND USER ID------------
-        firsturl = self.request.get('furl')
+        firsturl = self.request.get('furl') #these two collect the html form
         secondurl = self.request.get('lurl')
 
-
-        firsturl_list = firsturl.split('/')
+        firsturl_list = firsturl.split('/') #get the playlist string and user id
         firsturl_apistring = ""
         firsturl_userid = ""
-
 
         for index in range(len(firsturl_list)):
             if firsturl_list[index] == "playlist":
@@ -72,24 +69,32 @@ class FinalPage(webapp2.RequestHandler):
         print(firsturl_apistring)
 
         #CALLING THE SPOTIFY API FOR THE FIRST PLAYLIST-1-1-1-1-1-1-1-1-1-1-1-1-1-1
-        client_id = '59b8ca7342c2423fb79ff6951e9225e1'
+
+        #attemped Authorization Code auth flow using Spotipy
+        token = util.prompt_for_user_token(username='9jr9m0agxjjl2pcvx4jkpaj22',
+        scope='playlist-modify-public',
+        client_id='59b8ca7342c2423fb79ff6951e9225e1',
+        client_secret='15ebab6140284d3aa24309d876451981',
+        redirect_uri='http://localhost:8080/',
+        show_dialog='false')
+
+
+        #Client credentials auth flow
+        client_id = '59b8ca7342c2423fb79ff6951e9225e1' #this chunk sets up a proper HTTP call
         client_secret = '15ebab6140284d3aa24309d876451981'
         grant_type = 'client_credentials'
         body_params = {'grant_type' : grant_type}
         url='https://accounts.spotify.com/api/token'
         response=requests.post(url, data=body_params, auth = (client_id, client_secret))
 
-        # cc_api = requests.post('https://accounts.spotify.com/api/token',
-        # data = {'grant_type':'59b8ca7342c2423fb79ff6951e9225e1'},
-        # auth={"Authorization": "Basic 15ebab6140284d3aa24309d876451981"})
-
-        cc_api_content = response.content.split("\"")
+        cc_api_content = response.content.split("\"") #this chunk gets the token from the string
         token = cc_api_content[3]
 
-        api = requests.get("https://api.spotify.com/v1/users/"+firsturl_userid+"/playlists/"+firsturl_apistring+"/", #tracks?offset=100
+        #chunk below gets the first 100 songs
+        api = requests.get("https://api.spotify.com/v1/users/"+firsturl_userid+"/playlists/"+firsturl_apistring+"/",
         headers={"Authorization": "Bearer " + token ,
         "Accept": "application/json","Content-Type": "application/json"})
-        api_json = api.json() #changes Response object 'api' into an itemizable JSON
+        api_json = api.json() #changes Response object 'api' into an itemizable JSON (for analysis)
         api_text = api.text #changes Response object 'api' into text so it may be passed to jinja
         # print(api_text)
 
@@ -100,6 +105,7 @@ class FinalPage(webapp2.RequestHandler):
         list_songs_ordered=[] #contains a parallel ordered list with the corresponding appearance count
         dict_artists={} #contains (artist name):(how many appearances in playlist) (combines the two lists above)
         dict_songs={} #contains (song name):(unique song id)
+        dict_song_artist={} #contains (song id):(artist)
         songs_analyzed_count = 0 #developer variable (only for us)
 
         if api_json["owner"]["display_name"] != None:
@@ -122,8 +128,9 @@ class FinalPage(webapp2.RequestHandler):
             except (UnicodeEncodeError, IndexError):
                 print("an error has occurred")
             try:
-                print("trying to pass key " +item["track"]["name"]+ " to dict_songs with value " + item["track"]["id"])
+                # print("trying to pass key " +item["track"]["name"]+ " to dict_songs with value " + item["track"]["id"])
                 dict_songs[item["track"]["name"]] = item["track"]["id"]
+                dict_song_artist[item["track"]["id"]] = item["track"]["artists"][0]["name"]
             except (TypeError):
                 print("Error with adding song - NoneType detected")
 
@@ -172,8 +179,10 @@ class FinalPage(webapp2.RequestHandler):
                         print("an error has occurred")
 
                     try:
-                        print("trying to pass key " + x["track"]["name"]+ " to dict_songs with value " + x["track"]["id"])
+                        # print("trying to pass key " + x["track"]["name"]+ " to dict_songs with value " + x["track"]["id"])
                         dict_songs[x["track"]["name"]] = x["track"]["id"]
+                        dict_song_artist[x["track"]["id"]] = x["track"]["artists"][0]["name"]
+
                     except (TypeError):
                         print("Error with adding song - NoneType detected")
 
@@ -211,6 +220,8 @@ class FinalPage(webapp2.RequestHandler):
         list_songs_ordered_2=[] #contains a parallel ordered list with the corresponding appearance count
         dict_artists_2={} #contains (artist name):(how many appearances in playlist) (combines the two lists above)
         dict_songs_2={} #contains (song name):(unique song id)
+        dict_song_artist_2={} #contains (song id):(artist name)
+
         songs_analyzed_count_2 = 0 #developer variable (only for us)
 
         if api_json_2["owner"]["display_name"] != None:
@@ -232,8 +243,10 @@ class FinalPage(webapp2.RequestHandler):
             except (UnicodeEncodeError, IndexError):
                 print("an error has occurred")
             try:
-                print("trying to pass key " +item["track"]["name"]+ " to dict_songs_2 with value " + item["track"]["id"])
+                # print("trying to pass key " +item["track"]["name"]+ " to dict_songs_2 with value " + item["track"]["id"])
                 dict_songs_2[item["track"]["name"]] = item["track"]["id"]
+                dict_song_artist_2[item["track"]["id"]] = item["track"]["artists"][0]["name"]
+
             except (TypeError):
                 print("Error with adding song - NoneType detected")
 
@@ -279,7 +292,7 @@ class FinalPage(webapp2.RequestHandler):
                     except (UnicodeEncodeError, IndexError, UnicodeDecodeError):
                         print("an error has occurred")
                     try:
-                        print("trying to pass key " + x["track"]["name"]+ " to dict_songs with value " + x["track"]["id"])
+                        # print("trying to pass key " + x["track"]["name"]+ " to dict_songs with value " + x["track"]["id"])
                         dict_songs_2[x["track"]["name"]] = x["track"]["id"]
                     except (TypeError):
                         print("Error with adding song - NoneType detected")
@@ -319,10 +332,15 @@ class FinalPage(webapp2.RequestHandler):
                 if dict_songs[key] == dict_songs_2[key2]:
                     common_songs_names.append(key)
                     common_songs_ids.append(dict_songs)
+                    common_songs_artists.append(dict_song_artist[dict_songs[key]])
 
-        #TODO match artists to the common_songs
         print(cc_api_content[3])
 
+        #Chunk below outputs how much (percentually) of a playlist is shared with the other
+        percent_shared = (100.0*len(common_songs_names)/api_json["tracks"]["total"])
+        percent_shared_2 = (100.0*len(common_songs_names)/api_json_2["tracks"]["total"])
+        trunc_percent_shared = (1.0*(trunc(percent_shared*100)))/100
+        trunc_percent_shared_2 = (1.0*(trunc(percent_shared_2*100)))/100
 
 #----------------------PASS DATA TO JINJA TEMPLATE-------------------------------------------
         dict = { #dictionary that will be passed to the start_template
@@ -350,6 +368,8 @@ class FinalPage(webapp2.RequestHandler):
             "apistring_2": secondurl_apistring,
             "userid_1": firsturl_userid,
             "userid_2": secondurl_userid,
+            "d_song_artist":dict_song_artist,
+            "d_song_artist_2":dict_song_artist_2
             }
 
         start_template = jinja_current_dir.get_template("templates/results.html")
