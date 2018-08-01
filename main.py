@@ -5,6 +5,12 @@ import requests
 from google.appengine.api import urlfetch
 import json
 import spotipy
+from flask import Flask, request, redirect, g, render_template
+import base64
+# from bottle import route, run, request
+import spotipy
+from spotipy import oauth2
+import urllib
 import spotipy.util as util
 from math import trunc
 import unicodedata
@@ -15,11 +21,15 @@ sys.setdefaultencoding("utf-8")     #Beyonce with the accent (#BeyonceError)
 
 appengine.monkeypatch() #this is a patch that allows the python requests library to be used with Google App Engine
 
+app = Flask(__name__)
+
 
 jinja_current_dir = jinja2.Environment( #jinja is used for templating
     loader=jinja2.FileSystemLoader(os.path.dirname(__file__)),
     extensions=['jinja2.ext.autoescape'],
     autoescape=True)
+
+global_dict = {}
 
 class ResultsPage(webapp2.RequestHandler):
     def get(self):
@@ -69,14 +79,6 @@ class FinalPage(webapp2.RequestHandler):
         print(firsturl_apistring)
 
         #CALLING THE SPOTIFY API FOR THE FIRST PLAYLIST-1-1-1-1-1-1-1-1-1-1-1-1-1-1
-
-        #attemped Authorization Code auth flow using Spotipy
-        token = util.prompt_for_user_token(username='9jr9m0agxjjl2pcvx4jkpaj22',
-        scope='playlist-modify-public',
-        client_id='59b8ca7342c2423fb79ff6951e9225e1',
-        client_secret='15ebab6140284d3aa24309d876451981',
-        redirect_uri='http://localhost:8080/',
-        show_dialog='false')
 
 
         #Client credentials auth flow
@@ -134,7 +136,7 @@ class FinalPage(webapp2.RequestHandler):
             except (TypeError):
                 print("Error with adding song - NoneType detected")
 
-        print(songs_analyzed_count)
+        # print(songs_analyzed_count)
 
         #ANALYZING THE RECEIVED INFORMATION - FIRST PLAYLIST (SONGS 100-200)------------------------
         total_tracks_left = api_json["tracks"]["total"] #this is necessary as the next_api_json is formatted differently
@@ -147,13 +149,13 @@ class FinalPage(webapp2.RequestHandler):
         if total_tracks_left > 100: #SONGS 100-200 and then 200+
             while total_tracks_left > 5: #spotify api only returns first 100 songs, so we need to request more
                 if flag == 0:
-                    print("doing songs 100-200")
+                    # print("doing songs 100-200")
                     next_api = requests.get(api_json["tracks"]["next"], #calls 0-100 song json
                     headers={"Authorization": "Bearer " + token ,
                     "Accept": "application/json","Content-Type": "application/json"})
                     flag = 1 #ensures this will only run for song breakdown 100-200
                 elif total_tracks_left > 100: #ANALYSIS SONGS 200+
-                    print("doing songs 200+")
+                    # print("doing songs 200+")
                     next_api = requests.get(next_api_json["next"], #if total_tracks_left < 100, there will be no "next"
                     headers={"Authorization": "Bearer " + token ,
                     "Accept": "application/json","Content-Type": "application/json"})
@@ -187,7 +189,7 @@ class FinalPage(webapp2.RequestHandler):
                         print("Error with adding song - NoneType detected")
 
                 total_tracks_left -= 100
-                print("Finished the next 100 songs, " + str(total_tracks_left) + " songs left")
+                # print("Finished the next 100 songs, " + str(total_tracks_left) + " songs left")
 
         # for item in list_artists: #this is a test printer that prints the artists to console
         #     try: #it will be removed later
@@ -196,17 +198,17 @@ class FinalPage(webapp2.RequestHandler):
         #         item = item.encode('utf-8')
         #         print item
 
-        print(songs_analyzed_count)
+        # print(songs_analyzed_count)
         # print(dict_artists)
         for w in sorted(dict_artists, key=dict_artists.get, reverse=True): #this orders the dictionary by artist appearance and puts it into a new ordered list
             # print w, dict_artists[w] #key, value
             list_artists_ordered.append(w)
             list_songs_ordered.append(dict_artists[w])
-        print("finished printing Playlist 1s artists")
+        # print("finished printing Playlist 1s artists")
 
 
         #CALLING THE SPOTIFY API FOR THE SECOND PLAYLIST-2-2-2-2-2-2-2-2-2-2-2-2-2-2-2-2-2-2-2
-        print("passing " + secondurl_userid + " and " + secondurl_apistring + " to api_2")
+        # print("passing " + secondurl_userid + " and " + secondurl_apistring + " to api_2")
         api_2 = requests.get("https://api.spotify.com/v1/users/"+ secondurl_userid +"/playlists/" + secondurl_apistring + "/", #tracks?offset=100
         headers={"Authorization": "Bearer " + token ,
         "Accept": "application/json","Content-Type": "application/json"})
@@ -250,7 +252,7 @@ class FinalPage(webapp2.RequestHandler):
             except (TypeError):
                 print("Error with adding song - NoneType detected")
 
-        print(songs_analyzed_count_2)
+        # print(songs_analyzed_count_2)
 
         #ANALYZING THE RECEIVED INFORMATION - SECOND PLAYLIST (SONGS 100-200)-2-2-2-2-2-2-2-2-2-2-2-2-2-
         total_tracks_left_2 = api_json_2["tracks"]["total"] #this is necessary as the next_api_json is formatted differently
@@ -263,13 +265,13 @@ class FinalPage(webapp2.RequestHandler):
         if total_tracks_left_2 > 100:
             while total_tracks_left_2 > 5: #spotify api only returns first 100 songs, so we need to request more
                 if flag_2 == 0 and api_json_2["tracks"]["total"] > 100:
-                    print("doing songs 100-200")
+                    # print("doing songs 100-200")
                     next_api_2 = requests.get(api_json_2["tracks"]["next"], #calls 0-100 song json
                     headers={"Authorization": "Bearer " + token ,
                     "Accept": "application/json","Content-Type": "application/json"})
                     flag_2 = 1 #ensures this will only run for song breakdown 100-200
                 elif total_tracks_left_2 > 100: #ANALYSIS SONGS 200+
-                    print("doing songs 200+")
+                    # print("doing songs 200+")
                     next_api_2 = requests.get(next_api_json_2["next"], #if total_tracks_left < 100, there will be no "next"
                     headers={"Authorization": "Bearer " + token ,
                     "Accept": "application/json","Content-Type": "application/json"})
@@ -298,7 +300,7 @@ class FinalPage(webapp2.RequestHandler):
                         print("Error with adding song - NoneType detected")
 
                 total_tracks_left_2 -= 100
-                print("Finished the next 100 songs, " + str(total_tracks_left_2) + " songs left")
+                # print("Finished the next 100 songs, " + str(total_tracks_left_2) + " songs left")
 
         # for item in list_artists_2: #this is a test printer that prints the artists to console
         #     try: #it will be removed later
@@ -307,14 +309,14 @@ class FinalPage(webapp2.RequestHandler):
         #         item = item.encode('utf-8')
         #         print item
 
-        print(songs_analyzed_count_2)
+        # print(songs_analyzed_count_2)
         # print(dict_artists_2)
 
         for w in sorted(dict_artists_2, key=dict_artists_2.get, reverse=True): #this orders the dictionary by artist appearance and puts it into a new ordered list
-            print w, dict_artists_2[w] #key, value
+            # print w, dict_artists_2[w] #key, value
             list_artists_ordered_2.append(w)
             list_songs_ordered_2.append(dict_artists_2[w])
-        print("finished printing Playlist 2s artists")
+        # print("finished printing Playlist 2s artists")
 
         common_artists = [] #for the artists you will have in common
 
@@ -334,7 +336,7 @@ class FinalPage(webapp2.RequestHandler):
                     common_songs_ids.append(dict_songs)
                     common_songs_artists.append(dict_song_artist[dict_songs[key]])
 
-        print(cc_api_content[3])
+        # print(playlist_data)
 
         #Chunk below outputs how much (percentually) of a playlist is shared with the other
         percent_shared = (100.0*len(common_songs_names)/api_json["tracks"]["total"])
@@ -380,9 +382,124 @@ class AboutUsPage(webapp2.RequestHandler):
         start_template = jinja_current_dir.get_template("templates/aboutus.html")
         self.response.write(start_template.render())
 
+class SpotifyAuth(webapp2.RequestHandler):
+    def get(self):
+        print("successfully entered index() function!")
+        CLIENT_ID = "59b8ca7342c2423fb79ff6951e9225e1"
+        CLIENT_SECRET = "15ebab6140284d3aa24309d876451981"
+
+        print("ok, now we're passing information to stuff")
+        # Spotify URLS
+        SPOTIFY_AUTH_URL = "https://accounts.spotify.com/authorize"
+        SPOTIFY_TOKEN_URL = "https://accounts.spotify.com/api/token"
+        SPOTIFY_API_BASE_URL = "https://api.spotify.com"
+        API_VERSION = "v1"
+        SPOTIFY_API_URL = "{}/{}".format(SPOTIFY_API_BASE_URL, API_VERSION)
+
+        # Server-side Parameters
+        CLIENT_SIDE_URL = "http://127.0.0.1"
+        PORT = 8080
+        REDIRECT_URI = "{}:{}/callback/q".format(CLIENT_SIDE_URL, PORT)
+        SCOPE = "playlist-modify-public playlist-modify-private"
+        STATE = ""
+        SHOW_DIALOG_bool = True
+        SHOW_DIALOG_str = str(SHOW_DIALOG_bool).lower()
+
+        auth_query_parameters = {
+            "response_type": "code",
+            "redirect_uri": REDIRECT_URI,
+            "scope": SCOPE,
+            # "state": STATE,
+            # "show_dialog": SHOW_DIALOG_str,
+            "client_id": CLIENT_ID
+        }
+        # Auth Step 1: Authorization
+        url_args = "&".join(["{}={}".format(key,urllib.quote(val)) for key,val in auth_query_parameters.iteritems()])
+        auth_url = "{}/?{}".format(SPOTIFY_AUTH_URL, url_args)
+        print("auth complete")
+        print(auth_url)
+        global_dict["redirect"] = auth_url
+        self.response.write("here there will be a button to AuthPart2")
+        return redirect(auth_url)
+        # return redirect(auth_url)
+        dict={
+        "auth":auth_url,
+        }
+
+        start_template = jinja_current_dir.get_template("templates/redirect.html")
+        self.response.write(start_template.render(dict))
+
+class AuthPart2(webapp2.RequestHandler):
+    def get(self):
+        if request:
+            print("request found")
+        else:
+            print("request not found")
+
+        print("successfully entered callback() function!")
+        # Auth Step 4: Requests refresh and access tokens
+        auth_token = request.args.get('code')
+        code_payload = {
+            "grant_type": "authorization_code",
+            "code": str(auth_token),
+            "redirect_uri": REDIRECT_URI
+        }
+        base64encoded = base64.b64encode("{}:{}".format(CLIENT_ID, CLIENT_SECRET))
+        headers = {"Authorization": "Basic {}".format(base64encoded)}
+        post_request = requests.post(SPOTIFY_TOKEN_URL, data=code_payload, headers=headers)
+
+        # Auth Step 5: Tokens are Returned to Application
+        response_data = json.loads(post_request.text)
+        access_token = response_data["access_token"]
+        refresh_token = response_data["refresh_token"]
+        token_type = response_data["token_type"]
+        expires_in = response_data["expires_in"]
+
+        # Auth Step 6: Use the access token to access Spotify API
+        authorization_header = {"Authorization":"Bearer {}".format(access_token)}
+
+        # Get profile data
+        user_profile_api_endpoint = "{}/me".format(SPOTIFY_API_URL)
+        profile_response = requests.get(user_profile_api_endpoint, headers=authorization_header)
+        profile_data = json.loads(profile_response.text)
+
+        # Get user playlist data
+        playlist_api_endpoint = "{}/playlists".format(profile_data["href"])
+        playlists_response = requests.get(playlist_api_endpoint, headers=authorization_header)
+        playlist_data = json.loads(playlists_response.text)
+
+        # Combine profile and playlist data to display
+        display_arr = [profile_data] + playlist_data["items"]
+        return display_arr
+        return render_template("index.html",sorted_array=display_arr)
+        print("everything should be updated now!")
+        self.response.write("bleh")
+        # start_template = jinja_current_dir.get_template("templates/aboutus.html")
+        # self.response.write(start_template.render())
+
+class PlaylistPage(webapp2.RequestHandler):
+    def get(self):
+        #attempted Authorization Code auth flow using Spotipy
+        # token = util.prompt_for_user_token(username='9jr9m0agxjjl2pcvx4jkpaj22',
+        # scope='playlist-modify-public',
+        # client_id='59b8ca7342c2423fb79ff6951e9225e1',
+        # client_secret='15ebab6140284d3aa24309d876451981',
+        # redirect_uri='http://localhost:8080/')
+
+        self.response.write("this is the playlist page, which will have a link to spotify auth")
+        # start_template = jinja_current_dir.get_template("templates/homepage.html")
+        # self.response.write(start_template.render())
+
 app = webapp2.WSGIApplication([
     ('/', MainPage),
-    ('/about-us', AboutUsPage),
+    ('/aboutus', AboutUsPage),
     ('/final', FinalPage),
     ('/results', ResultsPage),
+    ('/callback/q', AuthPart2),
+    ('/spotifyauth', SpotifyAuth),
+    ('/spotifyauth2', AuthPart2),
+    ('/playlistoutput', PlaylistPage),
 ], debug=True)
+
+if __name__ == "__main__":
+    app.run(debug=True, threaded=True, port=PORT)
