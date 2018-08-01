@@ -5,7 +5,7 @@ import requests
 from google.appengine.api import urlfetch
 import json
 import spotipy
-from flask import Flask, request, redirect, g, render_template
+# from flask import Flask, request, redirect, g, render_template
 import base64
 # from bottle import route, run, request
 import spotipy
@@ -21,7 +21,7 @@ sys.setdefaultencoding("utf-8")     #Beyonce with the accent (#BeyonceError)
 
 appengine.monkeypatch() #this is a patch that allows the python requests library to be used with Google App Engine
 
-app = Flask(__name__)
+# app = Flask(__name__)
 
 
 jinja_current_dir = jinja2.Environment( #jinja is used for templating
@@ -403,139 +403,144 @@ class AboutUsPage(webapp2.RequestHandler):
         start_template = jinja_current_dir.get_template("templates/aboutus.html")
         self.response.write(start_template.render())
 
-class SpotifyAuth(webapp2.RequestHandler):
-    def get(self):
+# EVERYTHING COMMENTED BELOW THIS LINE WAS AN ATTEMPT TO USE THE AUTHENTICATION CODE FLOW.
+# unfortunately, we decided to cut our losses and just stick with the client
+# credentials flow, which doesn't provide all the functionality we ultimately
+# wanted but that's alright. We needed to focus on refining what we had.
 
-        print("successfully entered index() function!")
-        CLIENT_ID = "59b8ca7342c2423fb79ff6951e9225e1"
-        CLIENT_SECRET = "15ebab6140284d3aa24309d876451981"
-
-        global_dict["clientid"]=CLIENT_ID
-        global_dict["clientsecret"]=CLIENT_SECRET
-
-        print("ok, now we're passing information to stuff")
-        # Spotify URLS
-        SPOTIFY_AUTH_URL = "https://accounts.spotify.com/authorize"
-        SPOTIFY_TOKEN_URL = "https://accounts.spotify.com/api/token"
-        SPOTIFY_API_BASE_URL = "https://api.spotify.com"
-        API_VERSION = "v1"
-        SPOTIFY_API_URL = "{}/{}".format(SPOTIFY_API_BASE_URL, API_VERSION)
-
-        global_dict["spotifytokenurl"]=SPOTIFY_TOKEN_URL
-        global_dict["spotifyapiurl"]=SPOTIFY_API_URL
-        global_dict["clientid"]=CLIENT_ID
-        global_dict["clientsecret"]=CLIENT_SECRET
-
-        # Server-side Parameters
-        CLIENT_SIDE_URL = "http://127.0.0.1"
-        PORT = 8080
-        REDIRECT_URI = "{}:{}/callback/q".format(CLIENT_SIDE_URL, PORT)
-        SCOPE = "playlist-modify-public playlist-modify-private"
-        STATE = ""
-        SHOW_DIALOG_bool = True
-        SHOW_DIALOG_str = str(SHOW_DIALOG_bool).lower()
-
-        global_dict["redirecturi"]=REDIRECT_URI
-        global_dict["clientsecret"]=CLIENT_SECRET
-
-        auth_query_parameters = {
-            "response_type": "code",
-            "redirect_uri": REDIRECT_URI,
-            "scope": SCOPE,
-            # "state": STATE,
-            # "show_dialog": SHOW_DIALOG_str,
-            "client_id": CLIENT_ID
-        }
-        # Auth Step 1: Authorization
-        url_args = "&".join(["{}={}".format(key,urllib.quote(val)) for key,val in auth_query_parameters.iteritems()])
-        auth_url = "{}/?{}".format(SPOTIFY_AUTH_URL, url_args)
-        print("auth complete")
-        print(auth_url)
-        global_dict["redirect"] = auth_url
-        self.response.write("here there will be a button to AuthPart2")
-        if request:
-            print("request found pt 1")
-        else:
-            print("request not found pt 1")
-        return redirect(auth_url)
-        # return redirect(auth_url)
-        dict={
-        "auth":auth_url,
-        }
-
-        start_template = jinja_current_dir.get_template("templates/redirect.html")
-        self.response.write(start_template.render(dict))
-
-class AuthPart2(webapp2.RequestHandler):
-    def get(self):
-        if request:
-            print("request found")
-        else:
-            print("request not found")
-        print("successfully entered callback() function!")
-        # Auth Step 4: Requests refresh and access tokens
-        auth_token = request.args['code']
-        code_payload = {
-            "grant_type": "authorization_code",
-            "code": str(auth_token),
-            "redirect_uri": REDIRECT_URI
-        }
-        base64encoded = base64.b64encode("{}:{}".format(CLIENT_ID, CLIENT_SECRET))
-        headers = {"Authorization": "Basic {}".format(base64encoded)}
-        post_request = requests.post(SPOTIFY_TOKEN_URL, data=code_payload, headers=headers)
-
-        # Auth Step 5: Tokens are Returned to Application
-        response_data = json.loads(post_request.text)
-        access_token = response_data["access_token"]
-        refresh_token = response_data["refresh_token"]
-        token_type = response_data["token_type"]
-        expires_in = response_data["expires_in"]
-
-        # Auth Step 6: Use the access token to access Spotify API
-        authorization_header = {"Authorization":"Bearer {}".format(access_token)}
-
-        # Get profile data
-        user_profile_api_endpoint = "{}/me".format(SPOTIFY_API_URL)
-        profile_response = requests.get(user_profile_api_endpoint, headers=authorization_header)
-        profile_data = json.loads(profile_response.text)
-
-        # Get user playlist data
-        playlist_api_endpoint = "{}/playlists".format(profile_data["href"])
-        playlists_response = requests.get(playlist_api_endpoint, headers=authorization_header)
-        playlist_data = json.loads(playlists_response.text)
-
-        # Combine profile and playlist data to display
-        display_arr = [profile_data] + playlist_data["items"]
-        return display_arr
-        return render_template("index.html",sorted_array=display_arr)
-        print("everything should be updated now!")
-        self.response.write("bleh")
-        # start_template = jinja_current_dir.get_template("templates/aboutus.html")
-        # self.response.write(start_template.render())
-
-class PlaylistPage(webapp2.RequestHandler):
-    def get(self):
-        #attempted Authorization Code auth flow using Spotipy
-        # token = util.prompt_for_user_token(username='9jr9m0agxjjl2pcvx4jkpaj22',
-        # scope='playlist-modify-public',
-        # client_id='59b8ca7342c2423fb79ff6951e9225e1',
-        # client_secret='15ebab6140284d3aa24309d876451981',
-        # redirect_uri='http://localhost:8080/')
-
-        self.response.write("this is the playlist page, which will have a link to spotify auth")
-        # start_template = jinja_current_dir.get_template("templates/homepage.html")
-        # self.response.write(start_template.render())
+# class SpotifyAuth(webapp2.RequestHandler):
+#     def get(self):
+#
+#         print("successfully entered index() function!")
+#         CLIENT_ID = "59b8ca7342c2423fb79ff6951e9225e1"
+#         CLIENT_SECRET = "15ebab6140284d3aa24309d876451981"
+#
+#         global_dict["clientid"]=CLIENT_ID
+#         global_dict["clientsecret"]=CLIENT_SECRET
+#
+#         print("ok, now we're passing information to stuff")
+#         # Spotify URLS
+#         SPOTIFY_AUTH_URL = "https://accounts.spotify.com/authorize"
+#         SPOTIFY_TOKEN_URL = "https://accounts.spotify.com/api/token"
+#         SPOTIFY_API_BASE_URL = "https://api.spotify.com"
+#         API_VERSION = "v1"
+#         SPOTIFY_API_URL = "{}/{}".format(SPOTIFY_API_BASE_URL, API_VERSION)
+#
+#         global_dict["spotifytokenurl"]=SPOTIFY_TOKEN_URL
+#         global_dict["spotifyapiurl"]=SPOTIFY_API_URL
+#         global_dict["clientid"]=CLIENT_ID
+#         global_dict["clientsecret"]=CLIENT_SECRET
+#
+#         # Server-side Parameters
+#         CLIENT_SIDE_URL = "http://127.0.0.1"
+#         PORT = 8080
+#         REDIRECT_URI = "{}:{}/callback/q".format(CLIENT_SIDE_URL, PORT)
+#         SCOPE = "playlist-modify-public playlist-modify-private"
+#         STATE = ""
+#         SHOW_DIALOG_bool = True
+#         SHOW_DIALOG_str = str(SHOW_DIALOG_bool).lower()
+#
+#         global_dict["redirecturi"]=REDIRECT_URI
+#         global_dict["clientsecret"]=CLIENT_SECRET
+#
+#         auth_query_parameters = {
+#             "response_type": "code",
+#             "redirect_uri": REDIRECT_URI,
+#             "scope": SCOPE,
+#             # "state": STATE,
+#             # "show_dialog": SHOW_DIALOG_str,
+#             "client_id": CLIENT_ID
+#         }
+#         # Auth Step 1: Authorization
+#         url_args = "&".join(["{}={}".format(key,urllib.quote(val)) for key,val in auth_query_parameters.iteritems()])
+#         auth_url = "{}/?{}".format(SPOTIFY_AUTH_URL, url_args)
+#         print("auth complete")
+#         print(auth_url)
+#         global_dict["redirect"] = auth_url
+#         self.response.write("here there will be a button to AuthPart2")
+#         if request:
+#             print("request found pt 1")
+#         else:
+#             print("request not found pt 1")
+#         return redirect(auth_url)
+#         # return redirect(auth_url)
+#         dict={
+#         "auth":auth_url,
+#         }
+#
+#         start_template = jinja_current_dir.get_template("templates/redirect.html")
+#         self.response.write(start_template.render(dict))
+#
+# class AuthPart2(webapp2.RequestHandler):
+#     def get(self):
+#         if request:
+#             print("request found")
+#         else:
+#             print("request not found")
+#         print("successfully entered callback() function!")
+#         # Auth Step 4: Requests refresh and access tokens
+#         auth_token = request.args['code']
+#         code_payload = {
+#             "grant_type": "authorization_code",
+#             "code": str(auth_token),
+#             "redirect_uri": REDIRECT_URI
+#         }
+#         base64encoded = base64.b64encode("{}:{}".format(CLIENT_ID, CLIENT_SECRET))
+#         headers = {"Authorization": "Basic {}".format(base64encoded)}
+#         post_request = requests.post(SPOTIFY_TOKEN_URL, data=code_payload, headers=headers)
+#
+#         # Auth Step 5: Tokens are Returned to Application
+#         response_data = json.loads(post_request.text)
+#         access_token = response_data["access_token"]
+#         refresh_token = response_data["refresh_token"]
+#         token_type = response_data["token_type"]
+#         expires_in = response_data["expires_in"]
+#
+#         # Auth Step 6: Use the access token to access Spotify API
+#         authorization_header = {"Authorization":"Bearer {}".format(access_token)}
+#
+#         # Get profile data
+#         user_profile_api_endpoint = "{}/me".format(SPOTIFY_API_URL)
+#         profile_response = requests.get(user_profile_api_endpoint, headers=authorization_header)
+#         profile_data = json.loads(profile_response.text)
+#
+#         # Get user playlist data
+#         playlist_api_endpoint = "{}/playlists".format(profile_data["href"])
+#         playlists_response = requests.get(playlist_api_endpoint, headers=authorization_header)
+#         playlist_data = json.loads(playlists_response.text)
+#
+#         # Combine profile and playlist data to display
+#         display_arr = [profile_data] + playlist_data["items"]
+#         return display_arr
+#         return render_template("index.html",sorted_array=display_arr)
+#         print("everything should be updated now!")
+#         self.response.write("bleh")
+#         # start_template = jinja_current_dir.get_template("templates/aboutus.html")
+#         # self.response.write(start_template.render())
+#
+# class PlaylistPage(webapp2.RequestHandler):
+#     def get(self):
+#         #attempted Authorization Code auth flow using Spotipy
+#         # token = util.prompt_for_user_token(username='9jr9m0agxjjl2pcvx4jkpaj22',
+#         # scope='playlist-modify-public',
+#         # client_id='59b8ca7342c2423fb79ff6951e9225e1',
+#         # client_secret='15ebab6140284d3aa24309d876451981',
+#         # redirect_uri='http://localhost:8080/')
+#
+#         self.response.write("this is the playlist page, which will have a link to spotify auth")
+#         # start_template = jinja_current_dir.get_template("templates/homepage.html")
+#         # self.response.write(start_template.render())
 
 app = webapp2.WSGIApplication([
     ('/', MainPage),
     ('/aboutus', AboutUsPage),
     ('/final', FinalPage),
     ('/results', ResultsPage),
-    ('/callback/q', AuthPart2),
-    ('/spotifyauth', SpotifyAuth),
-    ('/spotifyauth2', AuthPart2),
-    ('/playlistoutput', PlaylistPage),
+    # ('/callback/q', AuthPart2),
+    # ('/spotifyauth', SpotifyAuth),
+    # ('/spotifyauth2', AuthPart2),
+    # ('/playlistoutput', PlaylistPage),
 ], debug=True)
 
-if __name__ == "__main__":
-    app.run(debug=True, threaded=True, port=PORT)
+# if __name__ == "__main__":
+#     app.run(debug=True, threaded=True, port=PORT)
