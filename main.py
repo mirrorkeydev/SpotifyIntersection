@@ -344,6 +344,10 @@ class FinalPage(webapp2.RequestHandler):
                     common_songs_artists.append(dict_song_artist[dict_songs[key]])
 
         #Chunk below outputs how much (percentually) of a playlist is shared with the other
+        total_songs_1 = api_json["tracks"]["total"]
+        total_songs_2 = api_json_2["tracks"]["total"]
+        total_shared_songs = len(common_songs_names)
+
         percent_shared = (100.0*len(common_songs_names)/api_json["tracks"]["total"])
         percent_shared_2 = (100.0*len(common_songs_names)/api_json_2["tracks"]["total"])
         trunc_percent_shared = (1.0*(trunc(percent_shared*100)))/100
@@ -361,7 +365,19 @@ class FinalPage(webapp2.RequestHandler):
             headers={"Authorization": "Bearer " + token ,
             "Accept": "application/json","Content-Type": "application/json"})
             api_artists_json = api_artists.json() #changes Response object 'api' into an itemizable JSON (for analysis)
-            artist_images_links[artistid] = api_artists_json["images"][0]["url"]
+            try:
+                artist_images_links[artistid] = api_artists_json["images"][2]["url"]
+            except IndexError:
+                try:
+                    artist_images_links[artistid] = api_artists_json["images"][1]["url"]
+                except IndexError:
+                    try:
+                        artist_images_links[artistid] = api_artists_json["images"][0]["url"]
+                    except IndexError:
+                        try:
+                            artist_images_links[artistid] = api_artists_json["images"][0]["url"]
+                        except IndexError:
+                            print("no image")
 
 #----------------------PASS DATA TO JINJA TEMPLATE-------------------------------------------
         dict = { #dictionary that will be passed to the start_template
@@ -392,7 +408,10 @@ class FinalPage(webapp2.RequestHandler):
             "userid_1": firsturl_userid,
             "userid_2": secondurl_userid,
             "d_song_artist":dict_song_artist,
-            "d_song_artist_2":dict_song_artist_2
+            "d_song_artist_2":dict_song_artist_2,
+            "t_songs_1":total_songs_1,
+            "t_songs_2":total_songs_2,
+            "t_shared_s":total_shared_songs,
             }
 
         start_template = jinja_current_dir.get_template("templates/results.html")
