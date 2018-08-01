@@ -26,7 +26,7 @@ both friends enjoy. Ideal for everything from road trips to general hangouts.
 --------------------------------------------------------------------------------
 HOW TO USE THIS APP
 --------------------------------------------------------------------------------
-1.) Visit (future app-engine URL)
+1.) Visit [the website](https://spotify-intersection.appspot.com/ "we promise it's super cool!")
 
 2.) Input the URLs of two playlists
 
