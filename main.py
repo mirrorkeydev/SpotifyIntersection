@@ -109,6 +109,7 @@ class FinalPage(webapp2.RequestHandler):
         dict_songs={} #contains (song name):(unique song id)
         dict_song_artist={} #contains (song id):(artist)
         songs_analyzed_count = 0 #developer variable (only for us)
+        dict_artists_id={} #contains (artist id):(artist name)
 
         if api_json["owner"]["display_name"] != None:
             username_1 = api_json["owner"]["display_name"]
@@ -121,6 +122,7 @@ class FinalPage(webapp2.RequestHandler):
                 if item["track"]["album"]["artists"][0]["name"] not in list_artists:
                     list_artists.append(item["track"]["album"]["artists"][0]["name"])
                     dict_artists[item["track"]["artists"][0]["name"]] = 1
+                    dict_artists_id[item["track"]["album"]["artists"][0]["id"]] = item["track"]["album"]["artists"][0]["name"]
                     # print("success! " + item["track"]["artists"][0]["name"])
                 else:
                     # print("artist " + item["track"]["artists"][0]["name"] + " already in list!")
@@ -172,6 +174,7 @@ class FinalPage(webapp2.RequestHandler):
                         if x["track"]["artists"][0]["name"] not in list_artists: #the formatting here is different than above, don't be fooled
                             list_artists.append(x["track"]["artists"][0]["name"])
                             dict_artists[x["track"]["artists"][0]["name"]] = 1
+                            dict_artists_id[x["track"]["album"]["artists"][0]["id"]] = x["track"]["album"]["artists"][0]["name"]
                             # print("success! " + x["track"]["artists"][0]["name"])
                         else:
                             # print("artist " + x["track"]["artists"][0]["name"] + " already in list!")
@@ -223,6 +226,7 @@ class FinalPage(webapp2.RequestHandler):
         dict_artists_2={} #contains (artist name):(how many appearances in playlist) (combines the two lists above)
         dict_songs_2={} #contains (song name):(unique song id)
         dict_song_artist_2={} #contains (song id):(artist name)
+        dict_artists_id_2={}
 
         songs_analyzed_count_2 = 0 #developer variable (only for us)
 
@@ -237,6 +241,7 @@ class FinalPage(webapp2.RequestHandler):
                 if item["track"]["album"]["artists"][0]["name"] not in list_artists_2:
                     list_artists_2.append(item["track"]["album"]["artists"][0]["name"])
                     dict_artists_2[item["track"]["artists"][0]["name"]] = 1
+                    dict_artists_id_2[item["track"]["album"]["artists"][0]["id"]] = item["track"]["album"]["artists"][0]["name"]
                     # print("success! " + item["track"]["artists"][0]["name"])
                 else:
                     # print("artist " + item["track"]["artists"][0]["name"] + " already in list!")
@@ -286,6 +291,7 @@ class FinalPage(webapp2.RequestHandler):
                         if x["track"]["artists"][0]["name"] not in list_artists_2: #the formatting here is different than above, don't be fooled
                             list_artists_2.append(x["track"]["artists"][0]["name"])
                             dict_artists_2[x["track"]["artists"][0]["name"]] = 1
+                            dict_artists_id_2[x["track"]["album"]["artists"][0]["id"]] = x["track"]["album"]["artists"][0]["name"]
                             # print("success! " + x["track"]["artists"][0]["name"])
                         else:
                             # print("artist " + x["track"]["artists"][0]["name"] + " already in list!")
@@ -328,6 +334,7 @@ class FinalPage(webapp2.RequestHandler):
         common_songs_names = [] #for songs in common with both playlists
         common_songs_ids = [] #parallel list containing id's of above songs
         common_songs_artists = [] #parallel list containing correct artist based on id
+        common_artists_ids = {} #artist id: artist name
 
         for key in dict_songs: #dict_songs["name of song"] = 172-song-3235-id-238940
             for key2 in dict_songs_2: #populates the lists below
@@ -336,13 +343,25 @@ class FinalPage(webapp2.RequestHandler):
                     common_songs_ids.append(dict_songs)
                     common_songs_artists.append(dict_song_artist[dict_songs[key]])
 
-        # print(playlist_data)
-
         #Chunk below outputs how much (percentually) of a playlist is shared with the other
         percent_shared = (100.0*len(common_songs_names)/api_json["tracks"]["total"])
         percent_shared_2 = (100.0*len(common_songs_names)/api_json_2["tracks"]["total"])
         trunc_percent_shared = (1.0*(trunc(percent_shared*100)))/100
         trunc_percent_shared_2 = (1.0*(trunc(percent_shared_2*100)))/100
+
+        for artistid in dict_artists_id:
+            for artistid2 in dict_artists_id_2:
+                if artistid == artistid2:
+                    common_artists_ids[artistid] = dict_artists_id[artistid]
+
+        artist_images_links = {} # (artistid):(imagelink)
+        #calling API for artist images
+        for artistid in common_artists_ids:
+            api_artists = requests.get("https://api.spotify.com/v1/artists/"+ artistid,
+            headers={"Authorization": "Bearer " + token ,
+            "Accept": "application/json","Content-Type": "application/json"})
+            api_artists_json = api_artists.json() #changes Response object 'api' into an itemizable JSON (for analysis)
+            artist_images_links[artistid] = api_artists_json["images"][0]["url"]
 
 #----------------------PASS DATA TO JINJA TEMPLATE-------------------------------------------
         dict = { #dictionary that will be passed to the start_template
@@ -356,6 +375,8 @@ class FinalPage(webapp2.RequestHandler):
             "c_songs_n":common_songs_names,
             "c_songs_i":common_songs_ids,
             "c_songs_a":common_songs_artists,
+            "c_artists_i":common_artists_ids,
+            "a_images_l":artist_images_links,
             "d_artists":dict_artists,
             "u_2": username_2,
             "text_2": api_text_2,
@@ -384,9 +405,13 @@ class AboutUsPage(webapp2.RequestHandler):
 
 class SpotifyAuth(webapp2.RequestHandler):
     def get(self):
+
         print("successfully entered index() function!")
         CLIENT_ID = "59b8ca7342c2423fb79ff6951e9225e1"
         CLIENT_SECRET = "15ebab6140284d3aa24309d876451981"
+
+        global_dict["clientid"]=CLIENT_ID
+        global_dict["clientsecret"]=CLIENT_SECRET
 
         print("ok, now we're passing information to stuff")
         # Spotify URLS
@@ -396,6 +421,11 @@ class SpotifyAuth(webapp2.RequestHandler):
         API_VERSION = "v1"
         SPOTIFY_API_URL = "{}/{}".format(SPOTIFY_API_BASE_URL, API_VERSION)
 
+        global_dict["spotifytokenurl"]=SPOTIFY_TOKEN_URL
+        global_dict["spotifyapiurl"]=SPOTIFY_API_URL
+        global_dict["clientid"]=CLIENT_ID
+        global_dict["clientsecret"]=CLIENT_SECRET
+
         # Server-side Parameters
         CLIENT_SIDE_URL = "http://127.0.0.1"
         PORT = 8080
@@ -404,6 +434,9 @@ class SpotifyAuth(webapp2.RequestHandler):
         STATE = ""
         SHOW_DIALOG_bool = True
         SHOW_DIALOG_str = str(SHOW_DIALOG_bool).lower()
+
+        global_dict["redirecturi"]=REDIRECT_URI
+        global_dict["clientsecret"]=CLIENT_SECRET
 
         auth_query_parameters = {
             "response_type": "code",
@@ -420,6 +453,10 @@ class SpotifyAuth(webapp2.RequestHandler):
         print(auth_url)
         global_dict["redirect"] = auth_url
         self.response.write("here there will be a button to AuthPart2")
+        if request:
+            print("request found pt 1")
+        else:
+            print("request not found pt 1")
         return redirect(auth_url)
         # return redirect(auth_url)
         dict={
@@ -435,10 +472,9 @@ class AuthPart2(webapp2.RequestHandler):
             print("request found")
         else:
             print("request not found")
-
         print("successfully entered callback() function!")
         # Auth Step 4: Requests refresh and access tokens
-        auth_token = request.args.get('code')
+        auth_token = request.args['code']
         code_payload = {
             "grant_type": "authorization_code",
             "code": str(auth_token),
