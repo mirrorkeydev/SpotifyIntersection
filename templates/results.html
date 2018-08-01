@@ -158,15 +158,16 @@
     <body>
       <center>
       <div>
+        <a href='/spotifyauth'><button>Continue</button></a>
         <h3> {{u_1}} and {{u_2}}, your shared songs: </h3>
-        {% for i in range(10) %}
-        {{ c_songs_n[i] }} -
+        {% for i in range(27)%}
+        {{ c_songs_n[i] }} - {{c_songs_a[i]}}<br>
         {% endfor %}
       </div>
       <div>
         <h3> {{u_1}} and {{u_2}}, your shared artists: </h3>
         {% for i in range(10) %}
-        {{ c_artists[i] }} - 
+        {{ c_artists[i] }} -
         {% endfor %}
       </div>
       <div>

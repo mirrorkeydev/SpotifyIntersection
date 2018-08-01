@@ -1,0 +1,177 @@
+<!--
+  Copyright 2018 Google LLC
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Results</title>
+    <style>
+      html, body {
+        margin: 0;
+        height: 100%;
+        /* overflow: hidden; */
+      }
+      h1{
+        padding-top: 20px;
+      }
+      div{
+        padding: 100px;
+        width: 100%;
+      }
+      .container2, .button, .nav{
+        position: absolute;
+      }
+      .container2 {
+        margin: auto;
+        top: 5%;
+        left: 90%;
+        margin-left: -20px;
+      }
+      #toggle {
+        display: none;
+      }
+      .button {
+      z-index: 999;
+      width: 43px;
+      height: 43px;
+      background: #a5d6a7;
+      text-align: center;
+      border-radius: 100%;
+      background-image: add;
+      transition: all 0.5s ease-in-out;
+      box-shadow: 1px 3px 10px 0 rgba(#000000, 0.3);
+      cursor: pointer;
+      }
+      .nav {
+        transform: translateY(-10%);
+        opacity: 0;
+        top: 13px;
+        left: -50px;
+        transition: all 0.5s ease-in-out;
+        background: #FFF;
+        width: 150px;
+        border-radius: 2px;
+        transform: translateY(0%);
+        box-shadow: 10px 3px 10px 0 rgba(#000000, 0.1);
+      }
+
+      .nav a {
+        text-align: center;
+        display: block;
+        margin: 25px;
+        color: #757575;
+        text-decoration: none;
+        font-family: 'Montserrat', sans-serif;
+        font-size: 15px;
+        font-weight: lighter;
+      }
+
+      #toggle:checked ~ .nav {
+        opacity: 1;
+        transform: translateY(10%);
+      }
+
+      #toggle:checked ~ .button {
+        transform: rotate(90deg);
+        box-shadow: 0 0 0 0 transparent;
+      }
+      body {
+        font-family: 'Montserrat', sans-serif;
+        background-color: #212121;
+        background: linear-gradient(#616161, #212121);
+        font-size: 15px;
+        color: white;
+      }
+      a:link {
+      color: white;
+      }
+      a:visited {
+          color: white;
+      }
+      a:hover {
+          color: #1DB954;
+      }
+      .container {
+        width: 600px;
+        height: 600px;
+        background-color: #00c853;
+        box-shadow: 10px 10px  #424242;
+      }
+
+      input[type=text] {
+        width: 60%;
+        padding: 10px 5px;
+        margin: 25px 0;
+        box-sizing: border-box;
+        border: none;
+        border-bottom: 1px solid #757575;
+        background-color: #00c853;
+        outline: none ;
+        ease-in-out;
+        transition: width .35s ease-in-out;
+      }
+      input:focus[type=text]{
+        width: 70% ;
+        border-bottom: 1px solid #a5d6a7;
+        color: #a5d6a7;
+      }
+      ::placeholder {
+        color: #757575;
+      }
+      .pulse-button {
+        position: relative;
+        width: 100px;
+        height: 100px;
+        border: none;
+        box-shadow: 0 0 0 0 #a5d6a7;
+        border-radius: 50%;
+        background-color: #a5d6a7;
+        background-image: audiotrack;
+        background-repeat: no-repeat;
+        cursor: pointer;
+        -webkit-animation: pulse 1.25s infinite cubic-bezier(0.66, 0, 0, 1);
+        -moz-animation: pulse 1.25s infinite cubic-bezier(0.66, 0, 0, 1);
+        -ms-animation: pulse 1.25s infinite cubic-bezier(0.66, 0, 0, 1);
+        animation: pulse 1.25s infinite cubic-bezier(0.66, 0, 0, 1);
+        outline: none;
+        margin-top:100px;
+      }
+      .pulse-button:hover {
+        -webkit-animation: none; -moz-animation: none; -ms-animation: none; animation: none;
+        box-shadow: 2px 5px 25px -5px #000;
+      }
+      @-webkit-keyframes pulse {to {box-shadow: 0 0 0 45px rgba(232, 76, 61, 0);}}
+      @-moz-keyframes pulse {to {box-shadow: 0 0 0 45px rgba(232, 76, 61, 0);}}
+      @-ms-keyframes pulse {to {box-shadow: 0 0 0 45px rgba(232, 76, 61, 0);}}
+      @keyframes pulse {to {box-shadow: 0 0 0 45px rgba(232, 76, 61, 0);}}
+
+      .material-icons {
+        position: relative;
+        color: #fff;
+        font-size: 30px;
+        vertical-align: middle;
+      }
+    </style>
+  </head>
+    <body>
+      <center>
+      <div>
+        <h3>Whoops! <br> It looks like you tried to visit the final page without entering any information. <br>
+        Please return to the <a href="/"> main page</a> and enter your information</h3>
+
+      </div>
+      </center>
+  </body>
+</html>
