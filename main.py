@@ -403,6 +403,7 @@ class AboutUsPage(webapp2.RequestHandler):
         start_template = jinja_current_dir.get_template("templates/aboutus.html")
         self.response.write(start_template.render())
 
+
 # EVERYTHING COMMENTED BELOW THIS LINE WAS AN ATTEMPT TO USE THE AUTHENTICATION CODE FLOW.
 # unfortunately, we decided to cut our losses and just stick with the client
 # credentials flow, which doesn't provide all the functionality we ultimately
