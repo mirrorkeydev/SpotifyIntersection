@@ -2,6 +2,7 @@
 <html lang="en" dir="ltr">
   <head>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link type="text/css" rel="stylesheet" href="materialize/css/materialize.min.css" media="screen,projection"/>
     <script>
     </script>
     <style>
@@ -17,24 +18,24 @@
       }
       .container2 {
         margin: auto;
-        top: 5%;
-        left: 90%;
+        top: 7.5%;
+        left: 4.8%;
         margin-left: -20px;
       }
       #toggle {
         display: none;
       }
       .button {
-      z-index: 999;
-      width: 41px;
-      height: 41px;
-      background: #94af76;
-      text-align: center;
-      border-radius: 100%;
-      background-image: add;
-      transition: all 0.5s ease-in-out;
-      box-shadow: 1px 3px 10px 0 rgba(#000000, 0.3);
-      cursor: pointer;
+        z-index: 999;
+        width: 41px;
+        height: 41px;
+        margin-left: 0px;
+        background: #7ca453;
+        text-align: center;
+        border-radius: 100%;
+        transition: all 0.5s ease-in-out;
+        cursor: pointer;
+        margin-left: 10px;
       }
       .nav {
         transform: translateY(-10%);
@@ -47,6 +48,7 @@
         border-radius: 2px;
         transform: translateY(0%);
         box-shadow: 10px 3px 10px 0 rgba(#000000, 0.1);
+        margin-left: 10px;
       }
 
       .nav a {
@@ -66,35 +68,32 @@
       }
 
       #toggle:checked ~ .button {
-        transform: rotate(135deg);
+        transform: rotate(90deg);
         box-shadow: 0 0 0 0 transparent;
       }
       body {
         font-family: 'Quicksand';
-        /* background-color: #212121;
-        background: linear-gradient(#616161, #212121); */
-        font-size: 30px;
-        background-color: #dcedc8;
-        background: linear-gradient(#f1f8e9, #dcedc8);
+        background-color: #212121;
+        background: linear-gradient(#616161, #212121);
+
         color: white;
       }
       h1 {
-        color: #add681;
+        color: white;
       }
       .container {
         width: 550px;
         height: 600px;
         /* background-color: #00c853; */
         background-color: #add681;
-        /* box-shadow: 10px 10px  #424242; */
-        box-shadow: 10px 10px #94af76;
+        box-shadow: 10px 10px  #424242;
         border-radius: 2px;
       }
 
       input[type=text] {
         width: 60%;
-        padding: 10px 5px;
-        margin: 20px 0;
+        padding: 5px 2px;
+        margin: 25px 0;
         box-sizing: border-box;
         border: none;
         border-bottom: 1px solid #757575;
@@ -105,8 +104,8 @@
       }
       input:focus[type=text]{
         width: 70% ;
-        border-bottom: 1px solid #a5d6a7;
-        color: #a5d6a7;
+        border-bottom: 1px solid white;
+        color: white;
       }
       ::placeholder {
         color: #757575;
@@ -117,9 +116,9 @@
         width: 100px;
         height: 100px;
         border: none;
-        box-shadow: 0 0 0 0 #c5e1a5;
+        box-shadow: 0 0 0 0 #7da453;
         border-radius: 50%;
-        background-color: #c5e1a5;
+        background-color: #7da453;
         background-image: audiotrack;
         background-repeat: no-repeat;
         cursor: pointer;
@@ -143,7 +142,8 @@
         position: relative;
         color: #fff;
         font-size: 30px;
-        vertical-align: middle;
+        margin-top: 5px;
+        margin-left: 0px;
       }
     </style>
     <meta charset="utf-8">
@@ -152,17 +152,19 @@
   <body>
     <div class="container2">
       <input type="checkbox" id="toggle" />
-      <label class="button" for="toggle"><i class="material-icons">add</i></label>
+      <label class="button" for="toggle"><i class="material-icons">menu</i></label>
       <nav class="nav">
         <a href="/aboutus.html">about us</a>
       </nav>
     </div>
     <center>
-      <h1 style="font-family: 'Quicksand'; font-weight: lighter;">spotify.intersection</h1>
+      <h1 style="font-family: 'Quicksand'; font-weight: lighter; margin-top: 60px;">spotify.connect</h1>
       <div class="container">
         <form method="POST" action= "/final">
-          <br><br><br>
-          <label for="furl"></label>
+          <br>
+          <p style="margin-left: 60px; margin-right: 60px; color: #757575;"> how to use: <br><br>go to Spotify and find two different playlists. copy and paste the playlist urls down below. press button to view your shared music and artists. </p>
+          <br>
+          <label for="fname"></label>
           <input type="text" placeholder="first playlist url" id="lname" name="furl">
           <label for="lname"></label>
           <input type="text" placeholder="second playlist url" id="lname" name="lurl">
@@ -171,5 +173,6 @@
         </form>
       </div>
     </center>
+    <script type="text/javascript" srct="materialize/js/materialize.min.js"></script>
   </body>
 </html>

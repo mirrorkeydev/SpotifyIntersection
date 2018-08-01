@@ -5,12 +5,13 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <style>
       @import url('https://fonts.googleapis.com/css?family=Quicksand');
+      @import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,600');
       html, body {
         margin: 0;
         border:0px;
         height: 100%;
         padding:0px;
-        overflow: hidden;
+        /* overflow: hidden; */
       }
       body {
 
@@ -25,6 +26,12 @@
         grid-column-gap: .1em;
         height: 98%;
       }
+      .row2 {
+        display: grid;
+        grid-template-columns: auto auto auto;
+        grid-column-gap: .1em;
+        height: 98%;
+      }
       .about {
         margin: 10px;
         height: 100%;
@@ -34,11 +41,11 @@
       img {
         position: relative;
         border-radius: 50%;
-        top: 10%;
+
       }
       iframe {
         position: relative;
-        top: 15%;
+        top: 10%;
         padding: 0px;
         overflow:hidden;
         background-color: #000000;
@@ -46,7 +53,7 @@
       .circle{
         width: 250px;
         position: relative;
-        top: 10%;
+        top: 5%;
         font-family: 'Quicksand';
         background-color: #000000;
         border-radius: 50%;
@@ -91,7 +98,164 @@
         text-align: center;
         font-weight: lighter;
       }
+
+
+/* Wrapper */
+.icon-button {
+	background-color: white;
+	border-radius: 2.6rem;
+	cursor: pointer;
+	display: inline-block;
+	font-size: 1.3rem;
+	height: 2.6rem;
+	line-height: 2.6rem;
+	margin: 0 5px;
+	position: relative;
+	text-align: center;
+	-webkit-user-select: none;
+	   -moz-user-select: none;
+	    -ms-user-select: none;
+	        user-select: none;
+	width: 2.6rem;
+}
+
+/* Circle */
+.icon-button span {
+	border-radius: 0;
+	display: block;
+	height: 0;
+	left: 50%;
+	margin: 0;
+	position: absolute;
+	top: 50%;
+	-webkit-transition: all 0.3s;
+	   -moz-transition: all 0.3s;
+	     -o-transition: all 0.3s;
+	        transition: all 0.3s;
+	width: 0;
+}
+.icon-button:hover span {
+	width: 2.6rem;
+	height: 2.6rem;
+	border-radius: 2.6rem;
+	margin: -1.3rem;
+}
+
+/* Icons */
+.icon-button i {
+	background: none;
+	color: white;
+	height: 2.6rem;
+	left: 0;
+	line-height: 2.6rem;
+	position: absolute;
+	top: 0;
+	-webkit-transition: all 0.3s;
+	   -moz-transition: all 0.3s;
+	     -o-transition: all 0.3s;
+	        transition: all 0.3s;
+	width: 2.6rem;
+	z-index: 10;
+}
+
+
+
+
+
+.twitter span {
+	background-color: #4099ff;
+}
+.facebook span {
+	background-color: #3B5998;
+}
+.google-plus span {
+	background-color: #db5a3c;
+}
+.tumblr span {
+	background-color: #34526f;
+}
+.instagram span {
+	background-color: #517fa4;
+}
+.youtube span {
+	background-color: #bb0000;
+}
+.pinterest span {
+	background-color: #cb2027;
+}
+
+
+
+.icon-button .icon-twitter {
+	color: #4099ff;
+}
+.icon-button .icon-facebook {
+	color: #3B5998;
+}
+.icon-button .fa-tumblr {
+	color: #34526f;
+}
+.icon-button .icon-google-plus {
+	color: #db5a3c;
+}
+.icon-button .fa-instagram {
+	color: #517fa4;
+}
+.icon-button .fa-youtube {
+	color: #bb0000;
+}
+.icon-button .fa-pinterest {
+	color: #cb2027;
+}
+
+
+
+
+.icon-button:hover .icon-twitter,
+.icon-button:hover .icon-facebook,
+.icon-button:hover .icon-google-plus,
+.icon-button:hover .fa-tumblr,
+.icon-button:hover .fa-instagram,
+.icon-button:hover .fa-youtube,
+.icon-button:hover .fa-pinterest {
+	color: white;
+}
+
+@media all and (max-width: 680px) {
+  .icon-button {
+    border-radius: 1.6rem;
+    font-size: 0.8rem;
+    height: 1.6rem;
+    line-height: 1.6rem;
+    width: 1.6rem;
+  }
+
+  .icon-button:hover span {
+    width: 1.6rem;
+    height: 1.6rem;
+    border-radius: 1.6rem;
+    margin: -0.8rem;
+  }
+
+  /* Icons */
+  .icon-button i {
+	  height: 1.6rem;
+	  line-height: 1.6rem;
+	  width: 1.6rem;
+  }
+  body {
+
+	  padding: 10px;
+  }
+  .pinterest {
+   display: none;
+  }
+
+}
+
+
     </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="utf-8">
     <title></title>
   </head>
@@ -100,6 +264,7 @@
       <div class= "zach">
         <div class="circle" style="margin:auto; width:250px;display:block">
         <img src="https://mail.google.com/mail/u/0/?ui=2&ik=ce9cc05a5e&view=att&th=164ec8c6263d95bf&attid=0.1&disp=safe&realattid=f_jk8mwh350&zw" style="margin:auto; width:250px;display:block"/>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <div class="text">
           <h3>Suk Joon Suh</h3>
           <p>An upcoming freshman of the University of Washington - Seattle. Excited to
@@ -116,9 +281,12 @@
         <img src="https://mail.google.com/mail/u/0/?ui=2&ik=ce9cc05a5e&view=att&th=164eca145c4057c0&attid=0.1&disp=safe&realattid=f_jk8npw8j0&zw" style="margin:auto; width:250px; height: 250px;display:block"/>
         <div class="text">
           <h3>Melanie Gutzmann</h3>
-          <p></p>
+          <p>Oregon State University. <br> I did the backend Python on this project, and
+          am a lover of sour dough bread and music!</p>
         </div>
+
         </div>
+
         <iframe src="https://open.spotify.com/embed/user/mirrorkey/playlist/3QnM2I2B8vZYEqhignp37n" style="margin:auto; display:block; box-shadow: 2px 5px 25px -5px #000;" width="300" height="380" frameborder="0" allowtransparency="true" allow="encrypted-media">
         </iframe>
       </div>
@@ -127,7 +295,7 @@
         <img src="https://mail.google.com/mail/u/0/?ui=2&ik=ce9cc05a5e&view=att&th=164ec8904a870b2e&attid=0.1&disp=safe&zw" style="margin:auto; width:250px; display:block"/>
         <div class="text">
           <h3>Helen Hernandez</h3>
-          <p></p>
+          <p>Western Washington University. <br> I worked on the frontend in this project. </p>
         </div>
         </div>
         <iframe src="https://open.spotify.com/embed/user/helen.asdfghjkl/playlist/3NFTLe4leeuHishwDKeB73" style="margin:auto; display:block; box-shadow: 2px 5px 25px -5px #000;"  width="300" height="380" frameborder="0" allowtransparency="true" allow="encrypted-media" vspace="0" hspace="0" marginwidth="0">
@@ -135,5 +303,31 @@
       </div>
 
     </div>
-  </body>
+    <div class="row2">
+      <div class="zach2">
+        <a href="#" class="icon-button twitter"><i class="fa fa-twitter"></i><span></span></a>
+        <a href="#" class="icon-button facebook"><i class="fa fa-facebook"></i><span></span></a>
+        <a href="#" class="icon-button google-plus"><i class="fa fa-google-plus"></i><span></span></a>
+        <a href="#" class="icon-button youtube"><i class="fa fa-youtube"></i><span></span></a>
+        <a href="#" class="icon-button pinterest"><i class="fa fa-pinterest"></i><span></span></a>
+      </div>
+
+      <div class="melanie2">
+        <a href="#" class="icon-button twitter"><i class="icon-twitter"></i><span></span></a>
+        <a href="#" class="icon-button facebook"><i class="icon-facebook"></i><span></span></a>
+        <a href="#" class="icon-button google-plus"><i class="icon-google-plus"></i><span></span></a>
+        <a href="#" class="icon-button youtube"><i class="fa fa-youtube"></i><span></span></a>
+        <a href="#" class="icon-button pinterest"><i class="fa fa-pinterest"></i><span></span></a>
+      </div>
+
+      <div class="helen2">
+        <a href="#" class="icon-button twitter"><i class="icon-twitter"></i><span></span></a>
+        <a href="#" class="icon-button facebook"><i class="icon-facebook"></i><span></span></a>
+        <a href="#" class="icon-button google-plus"><i class="icon-google-plus"></i><span></span></a>
+        <a href="#" class="icon-button youtube"><i class="fa fa-youtube"></i><span></span></a>
+        <a href="#" class="icon-button pinterest"><i class="fa fa-pinterest"></i><span></span></a>
+      </div>
+
+
+    </div>
 </html>
