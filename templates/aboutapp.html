@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <style>
+    @import url('https://fonts.googleapis.com/css?family=Quicksand');
+    @import url('https://fonts.googleapis.com/css?family=Montserrat');
+    html, body {
+      margin: 0;
+      height: 100%;
+      overflow: hidden;
+    }
+
+    body {
+      font-family: 'Quicksand';
+      background-color: #212121;
+      background: linear-gradient(#616161, #212121);
+      color: white;
+    }
+
+    h1 {
+      color: white;
+      font-family: 'Quicksand';
+      font-weight: lighter;
+      margin-top: 60px;
+    }
+
+    h5 {
+      position: relative;
+      top: 20px;
+      bottom: 15px;
+      margin-left: 60px;
+      margin-right: 60px;
+      margin-top: 15px;
+      margin-bottom: 15px;
+      color: #757575;
+      font-size: 18px;
+    }
+
+    p {
+      position: relative;
+      top: 18px;
+      bottom: 15px;
+      margin-left: 60px;
+      margin-right: 60px;
+      color: #757575;
+    }
+
+    .container {
+      width: 550px;
+      height: 600px;
+      /* background-color: #00c853; */
+      background-color: #add681;
+      box-shadow: 10px 10px  #424242;
+      border-radius: 2px;
+    }
+
+    .nav {
+      position: relative;
+      transform: translateY(-10%);
+      opacity: 0;
+      top: 13px;
+      left: -50px;
+      transition: all 0.5s ease-in-out;
+      background: #FFF;
+      width: 150px;
+      border-radius: 2px;
+      transform: translateY(0%);
+      box-shadow: 10px 3px 10px 0 rgba(#000000, 0.1);
+      margin-left: 10px;
+    }
+
+      .nav a {
+        text-align: center;
+        display: block;
+        margin: 20px;
+        color: #757575;
+        text-decoration: none;
+        font-family: 'Quicksand';
+        font-size: 15px;
+        font-weight: lighter;
+        }
+
+      #homebtn {
+        width: 50px;
+        margin-left: 50px;
+      }
+
+      #about-us-btn {
+        width: 70px;
+        margin-left: 40px;
+      }
+
+      .container1, .button, .nav{
+        position: absolute;
+      }
+
+      .container1 {
+        margin: auto;
+        top: 65px;
+        left: 80px;
+        display: inline-block;
+      }
+
+      .button {
+      z-index: 999;
+      width: 32px;
+      height: 28px;
+      margin-top: 6.3px;
+      margin-left: 19px;
+      /*margin-left: 5px;*/
+      /*background: #a5d6a7;*/ /*To get rid of green button*/
+      text-align: center;
+      border-radius: 100%;
+      transition: all 0.5s ease-in-out;
+      }
+
+      .bar1, .bar2, .bar3 {
+        width: 32px;
+        height: 3px;
+        background-color: white;
+        margin: 5px 0;
+        transition: .2s;
+      }
+
+      .change .bar1 {
+        -webkit-transform: rotate(-45deg) translate(-6px, 5px);
+        transform: rotate(-45deg) translate(-6px, 5px);
+      }
+
+      .change .bar2 {opacity: 0;}
+
+      .change .bar3 {
+        -webkit-transform: rotate(45deg) translate(-6px, -6px);
+        transform: rotate(45deg) translate(-6px, -6px);
+      }
+
+      #toggle {
+        display: none;
+      }
+
+      #toggle:checked ~ .nav {
+        opacity: 1;
+        transform: translateY(32%);
+      }
+
+    </style>
+  </head>
+  <body>
+
+    <div class="container1">
+      <input type="checkbox" id="toggle">
+        <label class="button" for="toggle" onclick="transform(this)">
+          <div class="bar1"></div>
+          <div class="bar2"></div>
+          <div class="bar3"></div>
+        </label>
+      <nav class="nav">
+        <a id="homebtn" href="/homepage.html">home</a>
+        <a id="about-us-btn" href="/aboutus.html">about us</a>
+        <a id="about-app-btn" href="/aboutapp.html">about the app</a>
+      </nav>
+    </div>
+
+    <center>
+      <h1>About the App</h1>
+      <div class="container">
+        <h5>WHAT IS THIS WEB APP?</h5>
+        <p>This web app was created as the final project of CSSI, Google's three-week intensive
+        summer program. The camp teaches HTML, CSS, Javascript, Python, Git, and Google
+        App Engine.</p>
+        <h5>WHY USE THIS WEB APP?</h5>
+        <p>This web app was designed with use between friends in mind. Assuming each friend
+        has a large enough playlist of songs they like (we recommend having upwards of 500 songs for optimal
+        matching), and their song preferences aren't too polar, the web app can find songs
+        both friends enjoy. Ideal for everything from road trips to general hangouts.</p>
+        <h5>WHAT INSPIRED US TO MAKE THIS APP?</h5>
+        <p>One of us had a friend who had different music tastes, so we thought that it would be cool if
+        Spotify had some kind of function that allowed us to compare 2 playlists and show an analysis on what
+        kind of music we have in common. The other source of inspiration came from our cssi teacher who
+        created a class playlist where everyone could add a song for everyone to listen to while coding.
+        It was cool listening to everyone's music, but sometimes it would go from an up-beat Taylor Swift
+        song to a chill rap.</p>
+      </div>
+    </center>
+    <script type="text/javascript" srct="materialize/js/materialize.min.js">
+    function transform(x) {
+      x.classList.toggle("change");
+    }
+    </script>
+  </body>
+</html>
