@@ -2,6 +2,7 @@
 <html lang="en" dir="ltr">
   <head>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
 <style>
     @import url('https://fonts.googleapis.com/css?family=Quicksand');
     @import url('https://fonts.googleapis.com/css?family=Montserrat');
@@ -29,6 +30,7 @@
       background-color: #add681;
       box-shadow: 10px 10px  #424242;
       border-radius: 2px;
+      visibility: visible;
     }
 
     .container2, .button, .nav{
@@ -190,20 +192,149 @@
       opacity: 1;
       transform: translateY(32%);
     }
+      #wrapper{
+      position:relative;
+      background: linear-gradient(#616161, #212121);
+      height:100%;
+      visibility: hidden;
+  }
+
+  .profile-main-loader{
+      left: 50% !important;
+      margin-left:-100px;
+      position: fixed !important;
+      top: 50% !important; /*50%*/
+      margin-top: -100px;
+      width: 45px;
+      z-index: 9000 !important;
+      visibility:inherit;
+  }
+
+  .profile-main-loader .loader {
+    position: relative;
+    margin: 0px auto;
+    width: 200px;
+    height:200px;
+    visibility:inherit;
+
+  }
+  .profile-main-loader .loader:before {
+    content: '';
+    display: block;
+    padding-top: 100%;
+    visibility:inherit;
+
+  }
+
+  .circular-loader {
+    -webkit-animation: rotate 2s linear infinite;
+            animation: rotate 2s linear infinite;
+    height: 100%;
+    -webkit-transform-origin: center center;
+        -ms-transform-origin: center center;
+            transform-origin: center center;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin: auto;
+    visibility:inherit;
+
+  }
+
+  .loader-path {
+    stroke-dasharray: 150,200;
+    stroke-dashoffset: -10;
+    -webkit-animation: dash 1.5s ease-in-out infinite, color 6s ease-in-out infinite;
+            animation: dash 1.5s ease-in-out infinite, color 6s ease-in-out infinite;
+    stroke-linecap: round;
+    visibility:inherit;
+
+  }
+
+  @-webkit-keyframes rotate {
+    100% {
+      -webkit-transform: rotate(360deg);
+              transform: rotate(360deg);
+    }
+  }
+
+  @keyframes rotate {
+    100% {
+      -webkit-transform: rotate(360deg);
+              transform: rotate(360deg);
+    }
+  }
+  @-webkit-keyframes dash {
+    0% {
+      stroke-dasharray: 1,200;
+      stroke-dashoffset: 0;
+    }
+    50% {
+      stroke-dasharray: 89,200;
+      stroke-dashoffset: -35;
+    }
+    100% {
+      stroke-dasharray: 89,200;
+      stroke-dashoffset: -124;
+    }
+  }
+  @keyframes dash {
+    0% {
+      stroke-dasharray: 1,200;
+      stroke-dashoffset: 0;
+    }
+    50% {
+      stroke-dasharray: 89,200;
+      stroke-dashoffset: -35;
+    }
+    100% {
+      stroke-dasharray: 89,200;
+      stroke-dashoffset: -124;
+    }
+  }
+  @-webkit-keyframes color {
+    0% {
+      stroke: #70c542;
+    }
+    40% {
+      stroke: #70c542;
+    }
+    66% {
+      stroke: #70c542;
+    }
+    80%, 90% {
+      stroke: #70c542;
+    }
+  }
+  @keyframes color {
+    0% {
+      stroke: #70c542;
+    }
+    40% {
+      stroke: #70c542;
+    }
+    66% {
+      stroke: #70c542;
+    }
+    80%, 90% {
+      stroke: #70c542;
+    }
+  }
+  #loadingtext{
+    position:relative;
+    bottom: 127px;
+    left: 73px;
+    color: #757575;
+  }
 
     </style>
     <meta charset="utf-8">
     <title>spotify</title>
   </head>
   <body>
-<<<<<<< HEAD
-    <div class="container2">
-      <input type="checkbox" id="toggle"/>
-      <label class="button" for="toggle"><i class="material-icons">menu</i></label>
-      <nav class="nav">
-        <a href="/aboutus">about us</a>
-=======
 
+=======
     <div class="container1">
       <input type="checkbox" id="toggle">
         <label class="button" for="toggle" onclick="transform(this)">
@@ -212,16 +343,15 @@
           <div class="bar3"></div>
         </label>
       <nav class="nav">
-        <a id="homebtn" href="/homepage.html">home</a>
-        <a id="about-us-btn" href="/aboutus.html">about us</a>
-        <a id="about-app-btn" href="/aboutapp.html">about the app</a>
->>>>>>> master
+        <a id="homebtn" href="/">home</a>
+        <a id="about-us-btn" href="/aboutus">about us</a>
+        <a id="about-app-btn" href="/aboutapp">about the app</a>
       </nav>
     </div>
 
     <center>
       <h1 style="font-family: 'Quicksand'; font-weight: lighter; margin-top: 60px;">spotify.connect</h1>
-      <div class="container">
+      <div class="container" id="greenbox">
         <form method="POST" action="/final">
           <br>
           <p style="margin-left: 60px; margin-right: 60px; color: #757575;"> how to use: <br><br>go to Spotify and find two different playlists. copy and paste the playlist urls down below. press button to view your shared music and artists. </p>
@@ -231,14 +361,32 @@
           <label for="lname"></label>
           <input type="text" placeholder="second playlist url" id="lname" name="lurl">
           <br><br>
-          <button onclick="location.href='file:///Users/demouser/Documents/GitHub/CSSI-Project/results.html'" class="pulse-button"><i class="material-icons">audiotrack</i></button>
+
+          <a href="/final"><button class="pulse-button" type="submit" id="load"><i class="material-icons">audiotrack</i></button>
         </form>
       </div>
     </center>
+
+    <div id="wrapper">
+      <div class="profile-main-loader">
+        <div class="loader">
+          <svg class="circular-loader"viewBox="25 25 50 50" >
+            <circle class="loader-path" cx="50" cy="50" r="20" fill="none" stroke="#70c542" stroke-width="2" />
+            <p id="loadingtext">loading</p>
+          </svg>
+        </div>
+      </div>
+    </div>
+
     <script type="text/javascript" srct="materialize/js/materialize.min.js">
     function transform(x) {
       x.classList.toggle("change");
     }
+    document.getElementById("load").addEventListener("click", function(){
+    document.getElementById("wrapper").style.visibility = "visible";
+    document.getElementById("load").style.visibility = "hidden";
+    document.getElementById("greenbox").style.visibility = "hidden";
+    });
     </script>
 
   </body>
