@@ -14,6 +14,12 @@
     background: linear-gradient(#616161, #212121);
     color: white;
   }
+  .container2::-webkit-scrollbar{
+    background-color: white;
+  }
+  .container2::-webkit-scrollbar-thumb{
+    background: #e0e0e0;
+  }
   .container1 {
     background-color: #add681;
     box-shadow: 10px 10px  #424242;
@@ -60,13 +66,129 @@
     -webkit-transform: scale(1.5);
   }
 
+  img {
+    height: 80px;
+    width: 80px;
+    margin: 5px;
+    object-fit: cover;
+   border-radius: 50%;
   }
+  #artists {
+  display:grid;
+  grid-template-columns: auto auto auto auto auto;
+  grid-column-gap: .1em;
+  height: 98%;
+  }
+  .container4, .button, .nav{
+    position: absolute;
+  }
+
+  .container4 {
+    margin: auto;
+    top: 64px;
+    left: 83px;
+    display: inline-block;
+  }
+
+  .button {
+  z-index: 999;
+  width: 32px;
+  height: 28px;
+  margin-top: 6.3px;
+  margin-left: 19px;
+  /*margin-left: 5px;*/
+  /*background: #a5d6a7;*/ /*To get rid of green button*/
+  text-align: center;
+  border-radius: 100%;
+  transition: all 0.5s ease-in-out;
+  }
+
+  .bar1, .bar2, .bar3 {
+    width: 32px;
+    height: 3px;
+    background-color: white;
+    margin: 5px 0;
+    transition: .2s;
+  }
+
+  .change .bar1 {
+    -webkit-transform: rotate(-45deg) translate(-6px, 5px);
+    transform: rotate(-45deg) translate(-6px, 5px);
+  }
+
+  .change .bar2 {opacity: 0;}
+
+  .change .bar3 {
+    -webkit-transform: rotate(45deg) translate(-6px, -6px);
+    transform: rotate(45deg) translate(-6px, -6px);
+  }
+
+  #toggle {
+    display: none;
+  }
+
+  #toggle:checked ~ .nav {
+    opacity: 1;
+    transform: translateY(32%);
+  }
+
+  #homebtn {
+    width: 50px;
+    margin-left: 50px;
+  }
+  #about-us-bnt {
+    width: 70px;
+    margin-left: 40px;
+  }
+  .nav {
+    position: relative;
+    transform: translateY(-10%);
+    opacity: 0;
+    top: 13px;
+    left: -50px;
+    transition: all 0.5s ease-in-out;
+    background: #FFF;
+    width: 150px;
+    border-radius: 2px;
+    transform: translateY(0%);
+    box-shadow: 10px 3px 10px 0 rgba(#000000, 0.1);
+    margin-left: 10px;
+    padding-bottom: 10px;
+    padding-top: 10px;
+    margin-top: -6px;
+  }
+
+    .nav a {
+      text-align: center;
+      display: block;
+      margin: 20px;
+      color: #757575;
+      text-decoration: none;
+      font-family: 'Quicksand';
+      font-size: 15px;
+      font-weight: lighter;
+      }
+
   </style>
   <head>
     <meta charset="utf-8">
+    <link rel="shortcut icon" type="image/x-icon" href="musicnote.png">
     <title></title>
   </head>
   <body>
+    <div class="container4">
+      <input type="checkbox" id="toggle">
+        <label class="button" for="toggle" onclick="transform(this)">
+          <div class="bar1"></div>
+          <div class="bar2"></div>
+          <div class="bar3"></div>
+        </label>
+      <nav class="nav">
+        <a id="homebtn" href="/">home</a>
+        <a id="about-us-btn" href="/aboutus">about us</a>
+        <a id="about-app-btn" href="/aboutapp">about the app</a>
+      </nav>
+    </div>
 
       <center><h1 style="font-family: 'Quicksand'; font-weight: lighter; margin-top: 60px;">spotify.connect</h1></center>
       <div class="row">
@@ -77,16 +199,41 @@
             <p style="margin-left:30px;">{{ l_artists_o[i] }} - {{ l_songs_o[i] }} songs</p>
             {% endfor %}
             <center>
-              <p class="number" style="font-size:50px; color: #757575; margin-bottom: -20px;">{{t_songs_1}}</p>
+              <p class="number" style="font-size:50px; color: #757575; margin-bottom: -20px;" id="tsongs">{{t_songs_1}}</p>
               <p style="font-size:20px; color: #757575">total songs</p>
               <div id="piechart"></div>
             </center>
         </div>
-        <div class="container2">
+        <div class="container2" style="overflow-y: scroll;">
           <center><p style="font-size: 30px;">
+            <h3> {{u_1}} and {{u_2}}, your shared artists: </h3>
+            <div class="row" id='artists'>
+            {% for i in a_images_l %}
+            {% for f in c_artists_i %}
+            {% if i == f %}
+            {% if loop.index <= 15 %}
+            <div class="container" >
+            <img src={{a_images_l[i]}} alt="" class="image">
+              <div class="overlay">
+                <!-- <div class="text">{{c_artists_i[f]}}</div> -->
+              </div>
+            </div>
+            {% endif %}
+            {% endif %}
+            {% endfor %}
+            {% endfor %}
+          </div>
+          <h3> Total shared artists: {{c_artists|length}}</h3>
+          <div>
+              <h3> {{u_1}} and {{u_2}}, your shared songs: </h3>
+              {% for i in range(20)%}
+              {{ c_songs_n[i] }} - {{c_songs_a[i]}}<br>
+              {% endfor %}
+            </div>
+          <h3> Total shared songs: {{c_songs_n|length}}</h3>
 
+      </div>
 
-        </div>
         <div class="container3">
           <center><p style="font-size: 20px;">{{ u_2 }}</p><hr></center>
             <p style="margin-left:20px;">your top artists:</p>
@@ -95,7 +242,7 @@
             {% endfor %}
 
             <center>
-              <p class="number"style="font-size:50px; color: #757575; margin-bottom: -20px;">{{t_songs_2}}</p>
+              <p class="number"style="font-size:50px; color: #757575; margin-bottom: -20px;" id="tsongs2">{{t_songs_2}}</p>
               <p style="font-size:20px; color: #757575">total songs</p>
               <div id="piechart2"></div>
             </center>
@@ -104,6 +251,11 @@
 
       </div>
 
+      </div>
+
+    <script text="text/javascript">function transform(x) {
+      x.classList.toggle("change");
+    }</script>
 
   </body>
   <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
@@ -150,6 +302,35 @@
     chart.draw(data, options);
     chart2.draw(data2, options);
 
+
   }
+  var count = document.getElementById('tsongs');
+  var countInner = count.innerHTML;
+  count.innerHTML = 0;
+  var i = 0;
+  var s = setInterval(function() {
+    var r = Math.floor(Math.random()*(countInner/100));
+    if (i+r <= countInner) {
+      i += r;
+      count.innerHTML = i;
+      } else {
+      count.innerHTML = countInner;
+      clearInterval(s);
+    }
+  }, 1);
+  var count2 = document.getElementById('tsongs2');
+  var countInner2 = count2.innerHTML;
+  count2.innerHTML = 0;
+  var i2 = 0;
+  var s2 = setInterval(function() {
+    var r2= Math.floor(Math.random()*(countInner2/100));
+    if (i2+r2 <= countInner2) {
+      i2 += r2;
+      count2.innerHTML = i2;
+      } else {
+      count2.innerHTML = countInner2;
+      clearInterval(s2);
+    }
+  }, 1);
   </script>
 </html>
