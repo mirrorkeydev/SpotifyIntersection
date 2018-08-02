@@ -19,10 +19,10 @@
    position: relative;
    /* top: ; */
    font-family: 'Quicksand';
-   background-color: #a5d6a7;
+   background-color: #a5b6a7;
    border-radius: 50%;
    overflow: hidden;
-   box-shadow: 2px 5px 5px -5px #000;
+   /* box-shadow: 2px 5px 5px -5px #000; */
    margin-bottom: 20px;
  }
  .circle .text {
@@ -43,7 +43,7 @@
  .circle:hover .text {
    -webkit-transform: scale(1);
    transform: scale(1);
-   background: rgba(189, 189, 189, .75);
+   background: rgba(189, 189, 189, .9);
    -webkit-box-shadow: 0px 0px 15px 2px rgba(255, 255, 255, .75);
    box-shadow: 0px 0px 15px 2px rgba(255, 255, 255, .75);
  }
@@ -97,9 +97,6 @@
 
   .number:hover {
     -webkit-transform: scale(1.5);
-    -webkit-transition: all 0.7s ease;
-  }
-
   }
 
   img {
@@ -206,12 +203,11 @@
       font-size: 15px;
       font-weight: lighter;
       }
-
   </style>
   <head>
     <meta charset="utf-8">
-    <link rel="shortcut icon" type="image/x-icon" href="musicnote.png">
-    <title></title>
+    <link rel="shortcut icon" type="image/x-icon" href="my-images/musicnote.png">
+    <title>analysis</title>
   </head>
   <body>
     <div class="container4">
@@ -262,14 +258,14 @@
             {% endfor %}
             {% endfor %}
           </div>
-          <h3> Total shared artists: {{c_artists|length}}</h3>
+          <h4> Total shared artists: {{c_artists|length}}</h4>
           <div>
               <h3 style="color: #757575">your shared songs: </h3>
-              {% for i in range(20)%}
+              {% for i in range(c_songs_n|length)%}
               {{ c_songs_n[i] }} - {{c_songs_a[i]}}<br>
               {% endfor %}
             </div>
-          <h3> Total shared songs: {{c_songs_n|length}}</h3>
+          <h4> Total shared songs: {{c_songs_n|length}}</h4>
 
       </div>
 
@@ -345,9 +341,12 @@
   }
   var count = document.getElementById('tsongs');
   var countInner = count.innerHTML;
-  count.innerHTML = 0;
-  var i = 0;
-  var s = setInterval(function() {
+  console.log(countInner);
+  console.log("if"+ count.innerHTML +"is greater than 100" )
+  if (count.innerHTML > 100){
+    count.innerHTML = 0;
+    var i = 0;
+    var s = setInterval(function() {
     var r = Math.floor(Math.random()*(countInner/100));
     if (i+r <= countInner) {
       i += r;
@@ -357,11 +356,18 @@
       clearInterval(s);
     }
   }, 1);
+  }
+  else{
+    count.innerHTML = countInner;
+  }
+
   var count2 = document.getElementById('tsongs2');
   var countInner2 = count2.innerHTML;
-  count2.innerHTML = 0;
-  var i2 = 0;
-  var s2 = setInterval(function() {
+  console.log(countInner2);
+  if (count2.innerHTML > 100){
+    count2.innerHTML = 0;
+    var i2 = 0;
+    var s2 = setInterval(function() {
     var r2= Math.floor(Math.random()*(countInner2/100));
     if (i2+r2 <= countInner2) {
       i2 += r2;
@@ -371,5 +377,11 @@
       clearInterval(s2);
     }
   }, 1);
+  }
+  else {
+    count2.innerHTML = countInner2;
+  }
+
+
   </script>
 </html>
