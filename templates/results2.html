@@ -14,6 +14,39 @@
     background: linear-gradient(#616161, #212121);
     color: white;
   }
+  .circle{
+   width: 250px;
+   position: relative;
+   /* top: ; */
+   font-family: 'Quicksand';
+   background-color: #a5d6a7;
+   border-radius: 50%;
+   overflow: hidden;
+   box-shadow: 2px 5px 5px -5px #000;
+   margin-bottom: 20px;
+ }
+ .circle .text {
+   width: 80px;
+   height: 80px;
+   top: 0;
+   left: 0;
+   position: absolute;
+   background: rgba(255, 255, 255, 0.75);
+   border-radius: 50%;
+   -webkit-transform: scale(0);
+   transform: scale(0);
+   -webkit-transition: all 0.7s ease;
+   transition: all 0.7s ease;
+   text-align: center;
+ }
+
+ .circle:hover .text {
+   -webkit-transform: scale(1);
+   transform: scale(1);
+   background: rgba(189, 189, 189, .75);
+   -webkit-box-shadow: 0px 0px 15px 2px rgba(255, 255, 255, .75);
+   box-shadow: 0px 0px 15px 2px rgba(255, 255, 255, .75);
+ }
   .container2::-webkit-scrollbar{
     background-color: white;
   }
@@ -64,20 +97,25 @@
 
   .number:hover {
     -webkit-transform: scale(1.5);
+    -webkit-transition: all 0.7s ease;
+  }
+
   }
 
   img {
-    height: 80px;
+    position: relative;
+    height: auto;
     width: 80px;
-    margin: 5px;
     object-fit: cover;
    border-radius: 50%;
+   top: -5px;
+   left: -5px;
   }
   #artists {
   display:grid;
   grid-template-columns: auto auto auto auto auto;
-  grid-column-gap: .1em;
-  height: 98%;
+  grid-row-gap: .5em;
+  margin: auto;
   }
   .container4, .button, .nav{
     position: absolute;
@@ -194,7 +232,7 @@
       <div class="row">
         <div class="container1">
           <center><p style="font-size: 20px;">{{ u_1 }}</p><hr></center>
-            <p style="margin-left:20px;">your top artists:</p>
+            <p style="margin-left:20px; color: #757575">your top artists:</p>
             {% for i in range(5) %}
             <p style="margin-left:30px;">{{ l_artists_o[i] }} - {{ l_songs_o[i] }} songs</p>
             {% endfor %}
@@ -206,16 +244,17 @@
         </div>
         <div class="container2" style="overflow-y: scroll;">
           <center><p style="font-size: 30px;">
-            <h3> {{u_1}} and {{u_2}}, your shared artists: </h3>
+            <h3 style="color: #757575"> your top shared artists: </h3>
             <div class="row" id='artists'>
             {% for i in a_images_l %}
             {% for f in c_artists_i %}
             {% if i == f %}
             {% if loop.index <= 15 %}
-            <div class="container" >
-            <img src={{a_images_l[i]}} alt="" class="image">
-              <div class="overlay">
-                <!-- <div class="text">{{c_artists_i[f]}}</div> -->
+            <div class="container"style="width: 80px;height:80px;  display:block; margin:auto;">
+              <div class="circle" style=" width:80px;height:80px; display:block;margin:auto;">
+                <img src={{a_images_l[i]}} alt="" class="image">
+                  <!-- <div class="overlay"> -->
+                <div class="text"><br>{{c_artists_i[f]}}</div>
               </div>
             </div>
             {% endif %}
@@ -225,7 +264,7 @@
           </div>
           <h3> Total shared artists: {{c_artists|length}}</h3>
           <div>
-              <h3> {{u_1}} and {{u_2}}, your shared songs: </h3>
+              <h3 style="color: #757575">your shared songs: </h3>
               {% for i in range(20)%}
               {{ c_songs_n[i] }} - {{c_songs_a[i]}}<br>
               {% endfor %}
@@ -236,7 +275,7 @@
 
         <div class="container3">
           <center><p style="font-size: 20px;">{{ u_2 }}</p><hr></center>
-            <p style="margin-left:20px;">your top artists:</p>
+            <p style="margin-left:20px; color: #757575">your top artists:</p>
             {% for i in range(5) %}
             <p style="margin-left:30px;">{{ l_artists_o_2[i] }} - {{ l_songs_o_2[i] }} songs</p>
             {% endfor %}
