@@ -2,165 +2,219 @@
 <html lang="en" dir="ltr">
   <head>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link type="text/css" rel="stylesheet" href="materialize/css/materialize.min.css" media="screen,projection"/>
-    <script>
-    </script>
-    <style>
+<style>
     @import url('https://fonts.googleapis.com/css?family=Quicksand');
     @import url('https://fonts.googleapis.com/css?family=Montserrat');
-      html, body {
-        margin: 0;
-        height: 100%;
-        overflow: hidden;
-      }
-      .container2, .button, .nav{
-        position: absolute;
-      }
-      .container2 {
-        margin: auto;
-        top: 7.5%;
-        left: 4.8%;
-        margin-left: -20px;
-      }
-      #toggle {
-        display: none;
-      }
-      .button {
-        z-index: 999;
-        width: 41px;
-        height: 41px;
-        margin-left: 0px;
-        background: #7ca453;
-        text-align: center;
-        border-radius: 100%;
-        transition: all 0.5s ease-in-out;
-        cursor: pointer;
-        margin-left: 10px;
-      }
-      .nav {
-        transform: translateY(-10%);
-        opacity: 0;
-        top: 13px;
-        left: -50px;
-        transition: all 0.5s ease-in-out;
-        background: #FFF;
-        width: 150px;
-        border-radius: 2px;
-        transform: translateY(0%);
-        box-shadow: 10px 3px 10px 0 rgba(#000000, 0.1);
-        margin-left: 10px;
-      }
+  html, body {
+    margin: 0;
+    height: 100%;
+    overflow: hidden;
+  }
+
+    body {
+      font-family: 'Quicksand';
+      background-color: #212121;
+      background: linear-gradient(#616161, #212121);
+      color: white;
+    }
+
+    h1 {
+      color: white;
+    }
+
+    .container {
+      width: 550px;
+      height: 600px;
+      /* background-color: #00c853; */
+      background-color: #add681;
+      box-shadow: 10px 10px  #424242;
+      border-radius: 2px;
+    }
+
+    .container2, .button, .nav{
+    }
+
+    .container2 {
+      margin: auto;
+      top: 7.5%;
+      left: 4.8%;
+      margin-left: -20px;
+    }
+
+    input[type=text] {
+      width: 60%;
+      padding: 5px 2px;
+      margin: 25px 0;
+      box-sizing: border-box;
+      border: none;
+      border-bottom: 1px solid #757575;
+      background-color: #add681;
+      outline: none ;
+      ease-in-out;
+      transition: width .35s ease-in-out;
+    }
+
+    input:focus[type=text]{
+      width: 70% ;
+      border-bottom: 1px solid white;
+      color: white;
+    }
+
+    .nav {
+      position: relative;
+      transform: translateY(-10%);
+      opacity: 0;
+      top: 13px;
+      left: -50px;
+      transition: all 0.5s ease-in-out;
+      background: #FFF;
+      width: 150px;
+      border-radius: 2px;
+      transform: translateY(0%);
+      box-shadow: 10px 3px 10px 0 rgba(#000000, 0.1);
+      margin-left: 10px;
+    }
 
       .nav a {
         text-align: center;
         display: block;
-        margin: 25px;
+        margin: 20px;
         color: #757575;
         text-decoration: none;
         font-family: 'Quicksand';
         font-size: 15px;
         font-weight: lighter;
+        }
+
+      #homebtn {
+        width: 50px;
+        margin-left: 50px;
       }
 
-      #toggle:checked ~ .nav {
-        opacity: 1;
-        transform: translateY(10%);
+      #about-us-btn {
+        width: 70px;
+        margin-left: 40px;
       }
 
-      #toggle:checked ~ .button {
-        transform: rotate(90deg);
-        box-shadow: 0 0 0 0 transparent;
-      }
-      body {
-        font-family: 'Quicksand';
-        background-color: #212121;
-        background: linear-gradient(#616161, #212121);
+    ::placeholder {
+      color: #757575;
+      font-family: 'Quicksand';
+    }
 
-        color: white;
-      }
-      h1 {
-        color: white;
-      }
-      .container {
-        width: 550px;
-        height: 600px;
-        /* background-color: #00c853; */
-        background-color: #add681;
-        box-shadow: 10px 10px  #424242;
-        border-radius: 2px;
-      }
+    .pulse-button {
+      position: relative;
+      width: 100px;
+      height: 100px;
+      border: none;
+      box-shadow: 0 0 0 0 #7da453;
+      border-radius: 50%;
+      background-color: #7da453;
+      background-image: audiotrack;
+      background-repeat: no-repeat;
+      cursor: pointer;
+      -webkit-animation: pulse 1.25s infinite cubic-bezier(0.66, 0, 0, 1);
+      -moz-animation: pulse 1.25s infinite cubic-bezier(0.66, 0, 0, 1);
+      -ms-animation: pulse 1.25s infinite cubic-bezier(0.66, 0, 0, 1);
+      animation: pulse 1.25s infinite cubic-bezier(0.66, 0, 0, 1);
+      outline: none;
+      margin-top:60px;
+    }
+    .pulse-button:hover {
+      -webkit-animation: none; -moz-animation: none; -ms-animation: none; animation: none;
+      box-shadow: 2px 5px 25px -5px #000;
+    }
+    @-webkit-keyframes pulse {to {box-shadow: 0 0 0 45px rgba(232, 76, 61, 0);}}
+    @-moz-keyframes pulse {to {box-shadow: 0 0 0 45px rgba(232, 76, 61, 0);}}
+    @-ms-keyframes pulse {to {box-shadow: 0 0 0 45px rgba(232, 76, 61, 0);}}
+    @keyframes pulse {to {box-shadow: 0 0 0 45px rgba(232, 76, 61, 0);}}
 
-      input[type=text] {
-        width: 60%;
-        padding: 5px 2px;
-        margin: 25px 0;
-        box-sizing: border-box;
-        border: none;
-        border-bottom: 1px solid #757575;
-        background-color: #add681;
-        outline: none ;
-        ease-in-out;
-        transition: width .35s ease-in-out;
-      }
-      input:focus[type=text]{
-        width: 70% ;
-        border-bottom: 1px solid white;
-        color: white;
-      }
-      ::placeholder {
-        color: #757575;
-        font-family: 'Quicksand';
-      }
-      .pulse-button {
-        position: relative;
-        width: 100px;
-        height: 100px;
-        border: none;
-        box-shadow: 0 0 0 0 #7da453;
-        border-radius: 50%;
-        background-color: #7da453;
-        background-image: audiotrack;
-        background-repeat: no-repeat;
-        cursor: pointer;
-        -webkit-animation: pulse 1.25s infinite cubic-bezier(0.66, 0, 0, 1);
-        -moz-animation: pulse 1.25s infinite cubic-bezier(0.66, 0, 0, 1);
-        -ms-animation: pulse 1.25s infinite cubic-bezier(0.66, 0, 0, 1);
-        animation: pulse 1.25s infinite cubic-bezier(0.66, 0, 0, 1);
-        outline: none;
-        margin-top:60px;
-      }
-      .pulse-button:hover {
-        -webkit-animation: none; -moz-animation: none; -ms-animation: none; animation: none;
-        box-shadow: 2px 5px 25px -5px #000;
-      }
-      @-webkit-keyframes pulse {to {box-shadow: 0 0 0 45px rgba(232, 76, 61, 0);}}
-      @-moz-keyframes pulse {to {box-shadow: 0 0 0 45px rgba(232, 76, 61, 0);}}
-      @-ms-keyframes pulse {to {box-shadow: 0 0 0 45px rgba(232, 76, 61, 0);}}
-      @keyframes pulse {to {box-shadow: 0 0 0 45px rgba(232, 76, 61, 0);}}
+    .material-icons {
+      position: relative;
+      color: #fff;
+      font-size: 30px;
+      margin-top: 5px;
+      margin-left: 0px;
+    }
 
-      .material-icons {
-        position: relative;
-        color: #fff;
-        font-size: 30px;
-        margin-top: 5px;
-        margin-left: 0px;
-      }
+    /* Transforming menu button */
+
+    .container1, .button, .nav{
+      position: absolute;
+    }
+
+    .container1 {
+      margin: auto;
+      top: 65px;
+      left: 80px;
+      display: inline-block;
+    }
+
+    .button {
+    z-index: 999;
+    width: 32px;
+    height: 28px;
+    margin-top: 6.3px;
+    margin-left: 19px;
+    /*margin-left: 5px;*/
+    /*background: #a5d6a7;*/ /*To get rid of green button*/
+    text-align: center;
+    border-radius: 100%;
+    transition: all 0.5s ease-in-out;
+    }
+
+    .bar1, .bar2, .bar3 {
+      width: 32px;
+      height: 3px;
+      background-color: white;
+      margin: 5px 0;
+      transition: .2s;
+    }
+
+    .change .bar1 {
+      -webkit-transform: rotate(-45deg) translate(-6px, 5px);
+      transform: rotate(-45deg) translate(-6px, 5px);
+    }
+
+    .change .bar2 {opacity: 0;}
+
+    .change .bar3 {
+      -webkit-transform: rotate(45deg) translate(-6px, -6px);
+      transform: rotate(45deg) translate(-6px, -6px);
+    }
+
+    #toggle {
+      display: none;
+    }
+
+    #toggle:checked ~ .nav {
+      opacity: 1;
+      transform: translateY(32%);
+    }
+
     </style>
     <meta charset="utf-8">
     <title>spotify</title>
   </head>
   <body>
-    <div class="container2">
-      <input type="checkbox" id="toggle" />
-      <label class="button" for="toggle"><i class="material-icons">menu</i></label>
+
+    <div class="container1">
+      <input type="checkbox" id="toggle">
+        <label class="button" for="toggle" onclick="transform(this)">
+          <div class="bar1"></div>
+          <div class="bar2"></div>
+          <div class="bar3"></div>
+        </label>
       <nav class="nav">
-        <a href="/aboutus.html">about us</a>
+        <a id="homebtn" href="/homepage.html">home</a>
+        <a id="about-us-btn" href="/aboutus.html">about us</a>
+        <a id="about-app-btn" href="/aboutapp.html">about the app</a>
       </nav>
     </div>
+
     <center>
       <h1 style="font-family: 'Quicksand'; font-weight: lighter; margin-top: 60px;">spotify.connect</h1>
       <div class="container">
-        <form method="POST" action= "/final">
+        <form method="POST" action="/final">
           <br>
           <p style="margin-left: 60px; margin-right: 60px; color: #757575;"> how to use: <br><br>go to Spotify and find two different playlists. copy and paste the playlist urls down below. press button to view your shared music and artists. </p>
           <br>
@@ -173,6 +227,11 @@
         </form>
       </div>
     </center>
-    <script type="text/javascript" srct="materialize/js/materialize.min.js"></script>
+    <script type="text/javascript" srct="materialize/js/materialize.min.js">
+    function transform(x) {
+      x.classList.toggle("change");
+    }
+    </script>
+
   </body>
 </html>
