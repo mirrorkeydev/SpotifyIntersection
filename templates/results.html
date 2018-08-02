@@ -6,7 +6,7 @@
   html, body {
     margin: 0;
     height: 100%;
-    /* overflow: hidden; */
+    overflow: hidden;
   }
   body {
     font-family: 'Quicksand';
@@ -57,44 +57,8 @@
   grid-column-gap: .1em;
   height: 98%;
   }
-  .image {
-  height: 80px;
-  width: 80px;
-  margin: 5px;
-  object-fit: cover;
-  border-radius: 50%;
-  display: block;
-  position:relative;
-}
 
-.overlay {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 100%;
-  width: 100%;
-  opacity: 0;
-  transition: .5s ease;
-  background-color: #008CBA;
-}
 
-.container:hover .overlay {
-  opacity: 1;
-}
-
-.text {
-  color: white;
-  font-size: 20px;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  -webkit-transform: translate(-50%, -50%);
-  -ms-transform: translate(-50%, -50%);
-  transform: translate(-50%, -50%);
-  text-align: center;
-}
   </style>
   <head>
     <meta charset="utf-8">
@@ -114,7 +78,7 @@
           <div class="container">
           <img src={{a_images_l[i]}} alt="" class="image">
             <div class="overlay">
-              <div class="text">{{c_artists_i[f]}}</div>
+              <!-- <div class="text">{{c_artists_i[f]}}</div> -->
             </div>
           </div>
           {% endif %}
@@ -154,7 +118,7 @@
          <p>
           {{text}}
         </p> -->
-        <h3> {{u_1}} and {{u_2}}, your shared songs: </h3>
+        <!-- <h3> {{u_1}} and {{u_2}}, your shared songs: </h3>
         {% for i in range(27)%}
         {{ c_songs_n[i] }} - {{c_songs_a[i]}}<br>
         {% endfor %}
