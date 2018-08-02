@@ -414,12 +414,17 @@ class FinalPage(webapp2.RequestHandler):
             "t_shared_s":total_shared_songs,
             }
 
-        start_template = jinja_current_dir.get_template("templates/results.html")
+        start_template = jinja_current_dir.get_template("templates/results2.html")
         self.response.write(start_template.render(dict))
 
 class AboutUsPage(webapp2.RequestHandler):
     def get(self):
         start_template = jinja_current_dir.get_template("templates/aboutus.html")
+        self.response.write(start_template.render())
+
+class AboutAppPage(webapp2.RequestHandler):
+    def get(self):
+        start_template = jinja_current_dir.get_template("templates/aboutapp.html")
         self.response.write(start_template.render())
 
 
@@ -556,6 +561,7 @@ app = webapp2.WSGIApplication([
     ('/aboutus', AboutUsPage),
     ('/final', FinalPage),
     ('/results', ResultsPage),
+    ('/aboutapp', AboutAppPage)
     # ('/callback/q', AuthPart2),
     # ('/spotifyauth', SpotifyAuth),
     # ('/spotifyauth2', AuthPart2),
