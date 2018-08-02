@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <style>
+      @import url('https://fonts.googleapis.com/css?family=Quicksand');
+  html, body {
+    margin: 0;
+    height: 100%;
+    overflow: hidden;
+  }
+  body {
+    font-family: 'Quicksand';
+    background-color: #212121;
+    background: linear-gradient(#616161, #212121);
+    color: white;
+  }
+  .container1 {
+    background-color: #add681;
+    box-shadow: 10px 10px  #424242;
+    border-radius: 2px;
+  }
+  .container2 {
+    background-color: #add681;
+    box-shadow: 10px 10px  #424242;
+    border-radius: 2px;
+  }
+  .container3 {
+    background-color: #add681;
+    box-shadow: 10px 10px  #424242;
+    border-radius: 2px;
+  }
+  .row {
+    display: grid;
+    grid-template-columns: 25% 50% 25%;
+    grid-column-gap: .9em;
+    height: 80%;
+    margin-left: 3%;
+    margin-right: 5%;
+  }
+  hr {
+    display: block;
+    border: .5px solid white;
+    width: 90%;
+    margin-bottom:10px;
+  }
+  #pie-chart{
+    background-color: black;
+  }
+  .image {
+    height: 80px;
+    width: 80px;
+    margin: 5px;
+    object-fit: cover;
+    border-radius: 50%;
+    display: block;
+    position:relative;
+  }
+
+  .number:hover {
+    -webkit-transform: scale(1.5);
+  }
+
+  }
+  </style>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+
+      <center><h1 style="font-family: 'Quicksand'; font-weight: lighter; margin-top: 60px;">spotify.connect</h1></center>
+      <div class="row">
+        <div class="container1">
+          <center><p style="font-size: 20px;">{{ u_1 }}</p><hr></center>
+            <p style="margin-left:20px;">your top artists:</p>
+            {% for i in range(5) %}
+            <p style="margin-left:30px;">{{ l_artists_o[i] }} - {{ l_songs_o[i] }} songs</p>
+            {% endfor %}
+            <center>
+              <p class="number" style="font-size:50px; color: #757575; margin-bottom: -20px;">{{t_songs_1}}</p>
+              <p style="font-size:20px; color: #757575">total songs</p>
+              <div id="piechart"></div>
+            </center>
+        </div>
+        <div class="container2">
+          <center><p style="font-size: 30px;">
+
+
+        </div>
+        <div class="container3">
+          <center><p style="font-size: 20px;">{{ u_2 }}</p><hr></center>
+            <p style="margin-left:20px;">your top artists:</p>
+            {% for i in range(5) %}
+            <p style="margin-left:30px;">{{ l_artists_o_2[i] }} - {{ l_songs_o_2[i] }} songs</p>
+            {% endfor %}
+
+            <center>
+              <p class="number"style="font-size:50px; color: #757575; margin-bottom: -20px;">{{t_songs_2}}</p>
+              <p style="font-size:20px; color: #757575">total songs</p>
+              <div id="piechart2"></div>
+            </center>
+        </div>
+      </div>
+
+      </div>
+
+
+  </body>
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+  <script type="text/javascript">
+  // Load google charts
+  let sh_songs = {{ t_shared_s}}
+  let songs_1 = {{ t_songs_1}}
+  let songs_2 = {{ t_songs_2}}
+
+  google.charts.load('current', {'packages':['corechart']});
+  google.charts.setOnLoadCallback(drawChart);
+
+  // Draw the chart and set the chart values
+  function drawChart() {
+    var data = google.visualization.arrayToDataTable([
+    ['song type', 'song number'],
+    ['your songs', songs_1],
+    ['shared songs', sh_songs],
+
+
+  ]);
+  var data2 = google.visualization.arrayToDataTable([
+  ['song type', 'song number'],
+  ['your songs', songs_2],
+  ['shared songs', sh_songs],
+
+
+]);
+    // Optional; add a title and set the width and height of the chart
+    var options = {'width':'auto',
+                   'height':'auto',
+                   'backgroundColor': '#add681',
+                   'chartArea': {'width': '100%', 'height': '70%'},
+                   'legend': {'position': 'bottom'},
+                   'colors': ['#c5e1a5', 'dcedc8'],
+                   'legend.textStyle': {'color': "white"},
+
+    };
+
+    // Display the chart inside the <div> element with id="piechart"
+    var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+    var chart2 = new google.visualization.PieChart(document.getElementById('piechart2'));
+    chart.draw(data, options);
+    chart2.draw(data2, options);
+
+  }
+  </script>
+</html>
