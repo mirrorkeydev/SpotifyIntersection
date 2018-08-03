@@ -28,7 +28,7 @@ HOW TO USE THIS APP
 --------------------------------------------------------------------------------
 1.) Visit [the website](https://spotify-intersection.appspot.com/ "we promise it's super cool!")
 
-2.) Input the URLs of two playlists
+2.) Input the URLs of two (public) playlists
 
 3.) Press the button!
 
