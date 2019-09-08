@@ -2,7 +2,6 @@ import webapp2
 import os
 import jinja2
 import requests
-from google.appengine.api import urlfetch
 import json
 import spotipy
 # from flask import Flask, request, redirect, g, render_template
@@ -23,6 +22,9 @@ appengine.monkeypatch() #this is a patch that allows the python requests library
 
 # app = Flask(__name__)
 
+spotify_json = json.load(open("spotify.json"), "utf8")
+client_id = spotify_json["client_id"]
+client_secret = spotify_json["client_secret"]
 
 jinja_current_dir = jinja2.Environment( #jinja is used for templating
     loader=jinja2.FileSystemLoader(os.path.dirname(__file__)),
@@ -82,8 +84,6 @@ class FinalPage(webapp2.RequestHandler):
 
 
         #Client credentials auth flow
-        client_id = '59b8ca7342c2423fb79ff6951e9225e1' #this chunk sets up a proper HTTP call
-        client_secret = '15ebab6140284d3aa24309d876451981'
         grant_type = 'client_credentials'
         body_params = {'grant_type' : grant_type}
         url='https://accounts.spotify.com/api/token'

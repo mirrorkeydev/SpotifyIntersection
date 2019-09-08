@@ -4,9 +4,14 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
+webapp2 = "*"
+jinja2 = "*"
 requests = "*"
+spotipy = "*"
+requests-toolbelt = "*"
+webob = "*"
 
 [dev-packages]
 
 [requires]
-python_version = "3.7"
+python_version = "2.7"
