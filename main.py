@@ -4,6 +4,7 @@ import jinja2
 import requests
 import json
 import spotipy
+import spotify
 # from flask import Flask, request, redirect, g, render_template
 import base64
 # from bottle import route, run, request
@@ -22,9 +23,10 @@ appengine.monkeypatch() #this is a patch that allows the python requests library
 
 # app = Flask(__name__)
 
-spotify_json = json.load(open("spotify.json"), "utf8")
-client_id = spotify_json["client_id"]
-client_secret = spotify_json["client_secret"]
+client_id = spotify.CLIENT_ID
+client_secret = spotify.CLIENT_SECRET
+
+# comment
 
 jinja_current_dir = jinja2.Environment( #jinja is used for templating
     loader=jinja2.FileSystemLoader(os.path.dirname(__file__)),

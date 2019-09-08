@@ -1,3 +1,4 @@
-spotify.json
 .vscode
 *.pyc
+spotify.py
+lib
