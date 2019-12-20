@@ -1,4 +1,6 @@
 # Spotify.Intersection (CSSI Final Project)
+![Search Page](https://raw.githubusercontent.com/mirrorkeydev/SpotifyIntersection/master/demo1.png)
+![Results Page](https://raw.githubusercontent.com/mirrorkeydev/SpotifyIntersection/master/demo2.png)
 --------------------------------------------------------------------------------
 WHAT IS THIS WEB APP?
 --------------------------------------------------------------------------------
